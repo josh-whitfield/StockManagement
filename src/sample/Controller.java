@@ -1,15 +1,26 @@
 package sample;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.scene.control.TextField;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javax.swing.*;
 
 public class Controller {
-    /*public void start(Stage primaryStage){
-        TextField txtUsername = new TextField();
-        VBox root = new VBox(5, txtUsername);
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        root.requestFocus();
-    }*/
+    @FXML CheckBox chkStayLoggedIn;
+
+    public void logIn(ActionEvent actionEvent) {
+        //login sql stuff here
+        if (chkStayLoggedIn.isSelected()){
+            JOptionPane.showMessageDialog(null, "Checkbox is selected", "Selected", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Checkbox is NOT selected", "NOT Selected", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
+    public void forgotPassword(ActionEvent actionEvent) {
+    }
+
+    public void createAccount(ActionEvent actionEvent) {
+    }
 }

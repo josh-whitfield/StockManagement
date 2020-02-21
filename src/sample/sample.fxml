@@ -4,35 +4,30 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="302.0" prefWidth="385.0" vgap="10"
-          xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" prefHeight="302.0" prefWidth="385.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <Pane prefHeight="302.0" prefWidth="384.0">
             <children>
-                <ImageView fitHeight="65.0" fitWidth="200.0" layoutX="101.0" layoutY="14.0" pickOnBounds="true"
-                           preserveRatio="true">
+                <ImageView fitHeight="65.0" fitWidth="200.0" layoutX="101.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Images/iBuyerLogo.png"/>
+                        <Image url="@../Images/iBuyerLogo.png" />
                     </image>
                 </ImageView>
-                <Label layoutX="131.0" layoutY="85.0" text="Sign in to your account"/>
-                <TextField layoutX="42.0" layoutY="106.0" prefHeight="25.0" prefWidth="300.0" promptText="Username"/>
-                <TextField layoutX="42.0" layoutY="143.0" prefHeight="25.0" prefWidth="300.0" promptText="Password"/>
-                <Hyperlink layoutX="40.0" layoutY="175.0" text="Forgot password?"/>
-                <Button layoutX="42.0" layoutY="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="300.0"
-                        text="Log In"/>
-                <CheckBox layoutX="42.0" layoutY="239.0" mnemonicParsing="false" text="Remember me on this computer"/>
-                <Label layoutX="110.0" layoutY="272.0" text="New User?"/>
-                <Hyperlink layoutX="167.0" layoutY="269.0" text="Create an account"/>
+                <Label layoutX="131.0" layoutY="85.0" text="Sign in to your account" />
+                <TextField layoutX="42.0" layoutY="106.0" prefHeight="25.0" prefWidth="300.0" promptText="Username" />
+                <TextField layoutX="42.0" layoutY="143.0" prefHeight="25.0" prefWidth="300.0" promptText="Password" />
+                <Hyperlink layoutX="40.0" layoutY="175.0" onAction="#forgotPassword" text="Forgot password?" />
+                <Button layoutX="42.0" layoutY="202.0" mnemonicParsing="false" onAction="#logIn" prefHeight="25.0" prefWidth="300.0" text="Log In" />
+                <CheckBox layoutX="42.0" layoutY="239.0" mnemonicParsing="false" text="Remember me on this computer" fx:id="chkStayLoggedIn"/>
+                <Label layoutX="110.0" layoutY="272.0" text="New User?" />
+                <Hyperlink layoutX="167.0" layoutY="269.0" onAction="#createAccount" text="Create an account" />
             </children>
         </Pane>
     </children>
     <columnConstraints>
-        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"
-                           percentWidth="100.0"/>
+        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" percentWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints/>
+        <RowConstraints />
     </rowConstraints>
 </GridPane>
