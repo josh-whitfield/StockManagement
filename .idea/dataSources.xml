@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="MySQL" uuid="85750cad-33b0-4970-a949-8471a33f00c6">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/stock_management</jdbc-url>
     </data-source>
   </component>
