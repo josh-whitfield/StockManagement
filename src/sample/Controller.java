@@ -19,7 +19,7 @@ public class Controller {
         boolean correctLogin = false;
 
         try {
-            //Store username and encoded password (look into salting as well) as text file somewhere on PC
+            //Store username and encoded password (look into salting as well) as text file somewhere on PC ()
             //On log out, clear text file
 
             String url = "jdbc:mysql://localhost:3306/stock_management";
