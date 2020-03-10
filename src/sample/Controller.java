@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class Controller {
     @FXML CheckBox chkStayLoggedIn;
     @FXML TextField txtUsername;
     @FXML TextField txtPassword;
+    @FXML GridPane loginGrid;
 
     public void logIn(ActionEvent actionEvent) {
         //login sql stuff here
@@ -28,11 +30,11 @@ public class Controller {
         try {
             //Store username and encoded password (look into salting as well) as text file somewhere on PC ()
             //On log out, clear text file
-//For "Keep me logged in" also save timestamp so it can expire. Date log in saved, date log in expires
+            //For "Keep me logged in" also save timestamp so it can expire. Date log in saved, date log in expires
             String url = "jdbc:mysql://localhost:3306/stock_management";
             Properties info = new Properties();
             info.put("user","root");
-            info.put("password","MISB3W1serSQL!");
+            info.put("password","Password99");
 
             myConn = DriverManager.getConnection(url,info);
             myStmt = myConn.prepareCall("{CALL usp_CheckLogIn(?,?,?)}");
@@ -58,15 +60,28 @@ public class Controller {
     }
 
     public void forgotPassword(ActionEvent actionEvent) {
-        Parent root;
+        //Parent root;
         try{
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("@../sample/forgotPassword.fxml"),resources);
-            Stage stage = new Stage();
+//            root = FXMLLoader.load(getClass().getClassLoader().getResource("@../sample/forgotPassword.fxml"),resources);
+//            Stage stage = new Stage();
+//            stage.setTitle("My New Stage Title");
+//            stage.setScene(new Scene(root, 450, 450));
+//            stage.show();
+//            // Hide this current window (if this is what you want)
+//            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
+
+
+            //Harry's stuff
+            Parent root = FXMLLoader.load(getClass().getResource("forgotPassword.fxml"));
+            Stage stage = (Stage) loginGrid.getScene().getWindow();
             stage.setTitle("My New Stage Title");
-            stage.setScene(new Scene(root, 450, 450));
+            stage.setScene(new Scene(root));
             stage.show();
-            // Hide this current window (if this is what you want)
-            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

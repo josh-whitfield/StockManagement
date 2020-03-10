@@ -4,18 +4,18 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="302.0" prefWidth="385.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane fx:id="loginGrid" alignment="center" hgap="10" prefHeight="302.0" prefWidth="385.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <Pane prefHeight="302.0" prefWidth="384.0">
             <children>
                 <ImageView fitHeight="65.0" fitWidth="200.0" layoutX="101.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/iBuyerLogo.png" />
+                        <Image url="@../Images/iBuyerLogo.png" />
                     </image>
                 </ImageView>
                 <Label layoutX="131.0" layoutY="85.0" text="Sign in to your account" />
-                <TextField fx:id="txtUsername" layoutX="42.0" layoutY="106.0" prefHeight="25.0" prefWidth="300.0" promptText="Username" onAction="#logIn" />
-                <PasswordField fx:id="txtPassword" layoutX="42.0" layoutY="139.0" prefHeight="25.0" prefWidth="300.0" promptText="Password" onAction="#logIn" />
+                <TextField fx:id="txtUsername" layoutX="42.0" layoutY="106.0" onAction="#logIn" prefHeight="25.0" prefWidth="300.0" promptText="Username" />
+                <PasswordField fx:id="txtPassword" layoutX="42.0" layoutY="139.0" onAction="#logIn" prefHeight="25.0" prefWidth="300.0" promptText="Password" />
                 <Hyperlink layoutX="40.0" layoutY="175.0" onAction="#forgotPassword" text="Forgot password?" />
                 <Button layoutX="42.0" layoutY="202.0" mnemonicParsing="false" onAction="#logIn" prefHeight="25.0" prefWidth="300.0" text="Log In" />
                 <CheckBox fx:id="chkStayLoggedIn" layoutX="42.0" layoutY="239.0" mnemonicParsing="false" text="Remember me on this computer" />
