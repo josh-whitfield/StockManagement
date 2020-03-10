@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.sql.*;
 import java.util.Properties;
 
@@ -28,9 +30,6 @@ public class Controller {
         boolean correctLogin = false;
 
         try {
-            //Store username and encoded password (look into salting as well) as text file somewhere on PC ()
-            //On log out, clear text file
-            //For "Keep me logged in" also save timestamp so it can expire. Date log in saved, date log in expires
             String url = "jdbc:mysql://localhost:3306/stock_management";
             Properties info = new Properties();
             info.put("user","root");
@@ -54,34 +53,30 @@ public class Controller {
                 txtUsername.requestFocus();
             }
 
+            if (chkStayLoggedIn.isSelected()) {
+                byte[] mac = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < mac.length; i++) {
+                    sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+                }
+                //TODO - Store mac address and PC user Name
+                
+
+                JOptionPane.showMessageDialog(null, String.format("Mac Address: %s",sb.toString()), "Temp", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, String.format("User Name: %s",System.getProperty("user.name")), "Temp", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void forgotPassword(ActionEvent actionEvent) {
-        //Parent root;
         try{
-//            root = FXMLLoader.load(getClass().getClassLoader().getResource("@../sample/forgotPassword.fxml"),resources);
-//            Stage stage = new Stage();
-//            stage.setTitle("My New Stage Title");
-//            stage.setScene(new Scene(root, 450, 450));
-//            stage.show();
-//            // Hide this current window (if this is what you want)
-//            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-
-
-
-            //Harry's stuff
             Parent root = FXMLLoader.load(getClass().getResource("forgotPassword.fxml"));
             Stage stage = (Stage) loginGrid.getScene().getWindow();
             stage.setTitle("My New Stage Title");
             stage.setScene(new Scene(root));
             stage.show();
-
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
