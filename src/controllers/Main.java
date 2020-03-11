@@ -6,15 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import references.PC_Credentials;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root;
-        if (database.Main.checkAutoLogIn(references.UserCredentials.macAddress(),references.UserCredentials.PC_Username())) {
+        String macAddress = PC_Credentials.macAddress();
+        String PC_Username = PC_Credentials.PC_Username();
+
+        if (database.Main.checkAutoLogIn(macAddress, PC_Username)) {
+            database.Main.AccountDetails(macAddress, PC_Username);
             //TODO - Change to Main Page once built
             root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
-            primaryStage.setTitle("Log In");
+            primaryStage.setTitle("Test");
         }
         else {
             root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));

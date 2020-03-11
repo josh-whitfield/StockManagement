@@ -8,6 +8,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import references.PC_Credentials;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -19,11 +20,17 @@ public class LogIn {
     @FXML GridPane loginGrid;
 
     public void logIn(ActionEvent actionEvent) {
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+
         try {
-            if (database.LogIn.checkLogIn(txtUsername.getText(),txtPassword.getText())) {
+            //Get Salt based on Username
+            database.LogIn.getSalt("testAdmin");
+
+            if (database.LogIn.checkLogIn(username,password)) {
                 JOptionPane.showMessageDialog(null, "Credentials Valid", "Credentials Valid", JOptionPane.INFORMATION_MESSAGE);
                 if (chkStayLoggedIn.isSelected()) {
-                    database.LogIn.saveLogIn(txtUsername.getText(),txtPassword.getText(),references.UserCredentials.macAddress(),references.UserCredentials.PC_Username());
+                    database.LogIn.saveLogIn(username,password, PC_Credentials.macAddress(), PC_Credentials.PC_Username());
                 }
             }
             else {

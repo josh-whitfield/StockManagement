@@ -2,14 +2,29 @@ package database;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Types;
-import java.util.Properties;
 
 public class LogIn {
-    public static boolean CheckLogIn(String username, String password){
+    public static byte[] getSalt(String username){
         try {
-            Connection myConn = database.DB_Connect.GetDatabaseConnection();
+            Connection myConn = database.DB_Connect.connection();
+            CallableStatement myStmt = myConn.prepareCall("{CALL usp_FindSalt(?,?)}");
+            myStmt.setString(1,username);
+            myStmt.registerOutParameter(2, Types.BLOB);
+
+            myStmt.execute();
+            byte[] salt = myStmt.getBytes(2);
+            myConn.close();
+            return salt;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean checkLogIn(String username, String password){
+        try {
+            Connection myConn = database.DB_Connect.connection();
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_CheckLogIn(?,?,?)}");
             myStmt.setString(1,username);
             myStmt.setString(2,password);
@@ -25,9 +40,9 @@ public class LogIn {
         }
     }
 
-    public static boolean SaveLogIn(String username, String password, String macAddress, String PC_Username){
+    public static boolean saveLogIn(String username, String password, String macAddress, String PC_Username){
         try {
-            Connection myConn = database.DB_Connect.GetDatabaseConnection();
+            Connection myConn = database.DB_Connect.connection();
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_SaveLogIn(?,?,?,?)}");
             myStmt.setString(1,username);
             myStmt.setString(2,password);
