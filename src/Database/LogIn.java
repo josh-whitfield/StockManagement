@@ -1,5 +1,10 @@
 package database;
 
+import references.Hashing;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
@@ -22,12 +27,19 @@ public class LogIn {
         }
     }
 
-    public static boolean checkLogIn(String username, String password){
+    public static boolean checkLogIn(String username, String password, byte[] salt){
         try {
+            String hashedPassword = Hashing.hashPassword(password, salt);
+
+            String myString = hashedPassword;
+            StringSelection stringSelection = new StringSelection(myString);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(stringSelection, null);
+
             Connection myConn = database.DB_Connect.connection();
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_CheckLogIn(?,?,?)}");
             myStmt.setString(1,username);
-            myStmt.setString(2,password);
+            myStmt.setString(2,hashedPassword);
             myStmt.registerOutParameter(3, Types.BIT);
 
             myStmt.execute();
