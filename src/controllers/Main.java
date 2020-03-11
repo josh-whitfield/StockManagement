@@ -1,4 +1,4 @@
-package sample;
+package controllers;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +11,9 @@ public class Main extends Application {
 //TODO - Check to see if the User and Mac address has a stored valid session
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("logIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
         primaryStage.setTitle("Log In");
-        primaryStage.getIcons().add(new Image("/Images/iBuyerIcon.png"));
+        primaryStage.getIcons().add(new Image("/resources/images/iBuyerIcon.png"));
         primaryStage.setScene(new Scene(root));
         root.requestFocus();
         primaryStage.show();
