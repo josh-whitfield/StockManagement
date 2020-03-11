@@ -2,7 +2,6 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -12,10 +11,6 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.sql.*;
-import java.util.Properties;
 
 public class LogIn {
     @FXML CheckBox chkStayLoggedIn;
@@ -24,21 +19,11 @@ public class LogIn {
     @FXML GridPane loginGrid;
 
     public void logIn(ActionEvent actionEvent) {
-        Connection myConn = null;
-        CallableStatement myStmt = null;
-        boolean correctLogin = false;
-
         try {
-            if (database.LogIn.CheckLogIn(txtUsername.getText(),txtPassword.getText())) {
+            if (database.LogIn.checkLogIn(txtUsername.getText(),txtPassword.getText())) {
                 JOptionPane.showMessageDialog(null, "Credentials Valid", "Credentials Valid", JOptionPane.INFORMATION_MESSAGE);
-
                 if (chkStayLoggedIn.isSelected()) {
-                    byte[] mac = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < mac.length; i++) {
-                        sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
-                    }
-                    database.LogIn.SaveLogIn(txtUsername.getText(),txtPassword.getText(),sb.toString(),System.getProperty("user.name"));
+                    database.LogIn.saveLogIn(txtUsername.getText(),txtPassword.getText(),references.UserCredentials.macAddress(),references.UserCredentials.PC_Username());
                 }
             }
             else {
