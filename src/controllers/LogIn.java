@@ -25,9 +25,17 @@ public class LogIn {
 
         try {
             if (database.LogIn.checkLogIn(username,password,database.LogIn.getSalt(username))) {
-                JOptionPane.showMessageDialog(null, "Credentials Valid", "Credentials Valid", JOptionPane.INFORMATION_MESSAGE);
-                if (chkStayLoggedIn.isSelected()) {
-                    database.LogIn.saveLogIn(username,password, PC_Credentials.macAddress(), PC_Credentials.PC_Username());
+                if (chkStayLoggedIn.isSelected())
+                    database.LogIn.saveLogIn(username, password, PC_Credentials.macAddress(), PC_Credentials.PC_Username());
+                //TODO - Open new window
+                try{
+                    Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
+                    Stage stage = (Stage) loginGrid.getScene().getWindow();
+                    stage.setTitle("MainPage");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
             else {
@@ -42,7 +50,7 @@ public class LogIn {
 
     public void forgotPassword(ActionEvent actionEvent) {
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("ForgotPassword.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
             Stage stage = (Stage) loginGrid.getScene().getWindow();
             stage.setTitle("My New Stage Title");
             stage.setScene(new Scene(root));
@@ -53,5 +61,14 @@ public class LogIn {
     }
 
     public void createAccount(ActionEvent actionEvent) {
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
+            Stage stage = (Stage) loginGrid.getScene().getWindow();
+            stage.setTitle("My New Stage Title");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

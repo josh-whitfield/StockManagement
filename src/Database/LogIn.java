@@ -2,9 +2,6 @@ package database;
 
 import references.Hashing;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
@@ -13,6 +10,7 @@ public class LogIn {
     public static byte[] getSalt(String username){
         try {
             Connection myConn = database.DB_Connect.connection();
+            assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_FindSalt(?,?)}");
             myStmt.setString(1,username);
             myStmt.registerOutParameter(2, Types.BLOB);
@@ -29,17 +27,11 @@ public class LogIn {
 
     public static boolean checkLogIn(String username, String password, byte[] salt){
         try {
-            String hashedPassword = Hashing.hashPassword(password, salt);
-
-            String myString = hashedPassword;
-            StringSelection stringSelection = new StringSelection(myString);
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(stringSelection, null);
-
             Connection myConn = database.DB_Connect.connection();
+            assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_CheckLogIn(?,?,?)}");
             myStmt.setString(1,username);
-            myStmt.setString(2,hashedPassword);
+            myStmt.setString(2,Hashing.hashPassword(password, salt));
             myStmt.registerOutParameter(3, Types.BIT);
 
             myStmt.execute();
@@ -55,6 +47,7 @@ public class LogIn {
     public static boolean saveLogIn(String username, String password, String macAddress, String PC_Username){
         try {
             Connection myConn = database.DB_Connect.connection();
+            assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_SaveLogIn(?,?,?,?)}");
             myStmt.setString(1,username);
             myStmt.setString(2,password);
