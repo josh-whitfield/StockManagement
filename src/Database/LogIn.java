@@ -18,11 +18,28 @@ public class LogIn {
             myStmt.execute();
             boolean correctLogin = myStmt.getBoolean(3);
             myConn.close();
-
             return correctLogin;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return true;
+    }
+
+    public static boolean SaveLogIn(String username, String password, String macAddress, String PC_Username){
+        try {
+            Connection myConn = database.DB_Connect.GetDatabaseConnection();
+            CallableStatement myStmt = myConn.prepareCall("{CALL usp_SaveLogIn(?,?,?,?)}");
+            myStmt.setString(1,username);
+            myStmt.setString(2,password);
+            myStmt.setString(3,macAddress);
+            myStmt.setString(4,PC_Username);
+
+            myStmt.execute();
+            myConn.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

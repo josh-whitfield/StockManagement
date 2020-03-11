@@ -38,9 +38,7 @@ public class LogIn {
                     for (int i = 0; i < mac.length; i++) {
                         sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
                     }
-                    //TODO - Store mac address and PC user Name
-                    JOptionPane.showMessageDialog(null, String.format("Mac Address: %s",sb.toString()), "Temp", JOptionPane.INFORMATION_MESSAGE);
-                    JOptionPane.showMessageDialog(null, String.format("User Name: %s",System.getProperty("user.name")), "Temp", JOptionPane.INFORMATION_MESSAGE);
+                    database.LogIn.SaveLogIn(txtUsername.getText(),txtPassword.getText(),sb.toString(),System.getProperty("user.name"));
                 }
             }
             else {
