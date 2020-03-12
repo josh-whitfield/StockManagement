@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class ForgotPassword {
@@ -40,6 +41,19 @@ public class ForgotPassword {
     }
 
     public void submit(ActionEvent actionEvent) {
+        String username = txtUsername.getText();
+        String chosenQuestion = (String) cbSecurityQuestion.getSelectionModel().getSelectedItem();
+        String answer = txtAnswer.getText();
 
+        String missingInfo = "";
+        if (username == "" || username.isEmpty()) missingInfo += "Please give your username\r\n";
+        if (chosenQuestion == "Please pick one of the following:")
+            missingInfo += "Please choose a security question\r\n";
+        if (answer == "" || answer.isEmpty()) missingInfo += "Please give your answer\r\n";
+
+        if (missingInfo != "")
+            JOptionPane.showMessageDialog(null, "There is missing information:\r\n" + missingInfo, "Missing Information", JOptionPane.INFORMATION_MESSAGE);
+
+        int selectedIndex = cbSecurityQuestion.getSelectionModel().getSelectedIndex();
     }
 }
