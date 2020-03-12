@@ -26,7 +26,7 @@ public class LogIn {
 
         if (username != "" && password != "") {
             try {
-                if (database.LogIn.checkLogIn(username, password, database.LogIn.getSalt(username))) {
+                if (database.LogIn.checkLogIn(username, references.Hashing.hashPassword(password,database.Global.getSalt(username,"Password")))) {
                     if (chkStayLoggedIn.isSelected())
                         database.LogIn.saveLogIn(username, password, PC_Credentials.macAddress(), PC_Credentials.PC_Username());
                     //TODO - Open new window
