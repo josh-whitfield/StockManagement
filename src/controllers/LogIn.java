@@ -24,28 +24,33 @@ public class LogIn {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        try {
-            if (database.LogIn.checkLogIn(username,password,database.LogIn.getSalt(username))) {
-                if (chkStayLoggedIn.isSelected())
-                    database.LogIn.saveLogIn(username, password, PC_Credentials.macAddress(), PC_Credentials.PC_Username());
-                //TODO - Open new window
-                try{
-                    Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
-                    Stage stage = (Stage) loginGrid.getScene().getWindow();
-                    stage.setTitle("Forgot Password");
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (username != "" && password != "") {
+            try {
+                if (database.LogIn.checkLogIn(username, password, database.LogIn.getSalt(username))) {
+                    if (chkStayLoggedIn.isSelected())
+                        database.LogIn.saveLogIn(username, password, PC_Credentials.macAddress(), PC_Credentials.PC_Username());
+                    //TODO - Open new window
+                    try {
+                        Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
+                        Stage stage = (Stage) loginGrid.getScene().getWindow();
+                        stage.setTitle("Forgot Password");
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect username or password", "Invalid Login", JOptionPane.INFORMATION_MESSAGE);
+                    txtPassword.setText("");
+                    txtUsername.requestFocus();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            else {
-                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Invalid Login", JOptionPane.INFORMATION_MESSAGE);
-                txtPassword.setText("");
-                txtUsername.requestFocus();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a username and password", "Invalid Login", JOptionPane.INFORMATION_MESSAGE);
+            txtPassword.setText("");
+            txtUsername.requestFocus();
         }
     }
 
