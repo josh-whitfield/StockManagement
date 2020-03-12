@@ -1,4 +1,5 @@
 package controllers;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +15,10 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class LogIn {
-    @FXML CheckBox chkStayLoggedIn;
+    @FXML GridPane loginGrid;
     @FXML TextField txtUsername;
     @FXML TextField txtPassword;
-    @FXML GridPane loginGrid;
+    @FXML CheckBox chkStayLoggedIn;
 
     public void logIn(ActionEvent actionEvent) {
         String username = txtUsername.getText();
@@ -31,7 +32,7 @@ public class LogIn {
                 try{
                     Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
                     Stage stage = (Stage) loginGrid.getScene().getWindow();
-                    stage.setTitle("MainPage");
+                    stage.setTitle("Forgot Password");
                     stage.setScene(new Scene(root));
                     stage.show();
                 } catch (IOException e) {
@@ -52,7 +53,7 @@ public class LogIn {
         try{
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
             Stage stage = (Stage) loginGrid.getScene().getWindow();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Forgot Password");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
