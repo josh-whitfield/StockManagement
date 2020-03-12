@@ -23,7 +23,7 @@ public class ForgotPassword {
 
     public void initialize(){
         cbSecurityQuestion.setItems(FXCollections.observableArrayList(
-                "Please pick one of the following:",new Separator(),"What primary school did you attend?", "What is your spouse or partner's mother's maiden name? ", "What was the name of your first pet?", "In what city were you born?")
+                "Please pick one of the following:",new Separator(), "What is your spouse or partner's mother's maiden name? ", "What was the name of your first pet?", "In what city were you born?")
         );
         cbSecurityQuestion.setValue("Please pick one of the following:");
     }
