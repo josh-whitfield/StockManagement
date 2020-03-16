@@ -1,5 +1,6 @@
 package controllers;
 
+import database.Global;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import references.Hashing;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -53,7 +55,11 @@ public class ForgotPassword {
 
         if (missingInfo != "")
             JOptionPane.showMessageDialog(null, "There is missing information:\r\n" + missingInfo, "Missing Information", JOptionPane.INFORMATION_MESSAGE);
-
-        int selectedIndex = cbSecurityQuestion.getSelectionModel().getSelectedIndex();
+        else {
+            int selectedIndex = cbSecurityQuestion.getSelectionModel().getSelectedIndex();
+            String saltType = String.format("Question%s", selectedIndex);
+            boolean correctAnswer = database.ForgotPassword.checkSecurityQuestion(selectedIndex, username, Hashing.hashValue(answer, Global.getSalt(username, saltType)));
+            JOptionPane.showMessageDialog(null, correctAnswer, "Submitted", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }
