@@ -2,7 +2,6 @@ package controllers;
 
 import database.Global;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,12 +24,12 @@ public class ForgotPassword {
 
     public void initialize(){
         cbSecurityQuestion.setItems(FXCollections.observableArrayList(
-                "Please pick one of the following:",new Separator(), "What is your spouse or partner's mother's maiden name? ", "What was the name of your first pet?", "In what city were you born?")
+                "Please pick one of the following:",new Separator(), "What is your mother's maiden name?", "What was the name of your first pet?", "In what city were you born?")
         );
         cbSecurityQuestion.setValue("Please pick one of the following:");
     }
 
-    public void logIn(ActionEvent actionEvent) {
+    public void logIn() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
             Stage stage = (Stage) forgotPasswordGrid.getScene().getWindow();
@@ -42,7 +41,7 @@ public class ForgotPassword {
         }
     }
 
-    public void submit(ActionEvent actionEvent) {
+    public void submit() {
         String username = txtUsername.getText();
         String chosenQuestion = (String) cbSecurityQuestion.getSelectionModel().getSelectedItem();
         String answer = txtAnswer.getText();
@@ -56,9 +55,8 @@ public class ForgotPassword {
         if (missingInfo != "")
             JOptionPane.showMessageDialog(null, "There is missing information:\r\n" + missingInfo, "Missing Information", JOptionPane.INFORMATION_MESSAGE);
         else {
-            int selectedIndex = cbSecurityQuestion.getSelectionModel().getSelectedIndex();
-            String saltType = String.format("Question%s", selectedIndex);
-            boolean correctAnswer = database.ForgotPassword.checkSecurityQuestion(selectedIndex, username, Hashing.hashValue(answer, Global.getSalt(username, saltType)));
+            int selectedIndex = cbSecurityQuestion.getSelectionModel().getSelectedIndex() - 1;
+            boolean correctAnswer = database.ForgotPassword.checkSecurityQuestion(selectedIndex, username, Hashing.hashValue(answer, Global.getSalt(username, String.format("Question%s", selectedIndex))));
             JOptionPane.showMessageDialog(null, correctAnswer, "Submitted", JOptionPane.INFORMATION_MESSAGE);
         }
     }

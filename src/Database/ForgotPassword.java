@@ -7,7 +7,7 @@ import java.sql.Types;
 public class ForgotPassword {
     public static boolean checkSecurityQuestion(int questionIndex, String username, String UserAnswer){
         try {
-            Connection myConn = database.DB_Connect.connection();
+            Connection myConn = database.DB_Connect.getConnection();
             assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_CheckSecurityQuestion(?,?,?,?)}");
             myStmt.setInt(1,questionIndex);
@@ -25,9 +25,9 @@ public class ForgotPassword {
         }
     }
 
-    public static void UpdatePassword(String username, String password){
+    public static void updatePassword(String username, String password){
         try {
-            Connection myConn = database.DB_Connect.connection();
+            Connection myConn = database.DB_Connect.getConnection();
             assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_ChangePassword(?,?)}");
             myStmt.setString(1,username);

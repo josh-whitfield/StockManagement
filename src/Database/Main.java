@@ -9,7 +9,7 @@ import java.sql.Types;
 public class Main {
     public static boolean checkAutoLogIn(String macAddress, String PC_Username){
         try {
-            Connection myConn = database.DB_Connect.connection();
+            Connection myConn = database.DB_Connect.getConnection();
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_CheckAutoLogIn(?,?,?)}");
             myStmt.setString(1,macAddress);
             myStmt.setString(2,PC_Username);
@@ -25,9 +25,9 @@ public class Main {
         }
     }
 
-    public static void AccountDetails(String macAddress, String PC_Username){
+    public static void getAccountDetails(String macAddress, String PC_Username){
         try {
-            Connection myConn = database.DB_Connect.connection();
+            Connection myConn = database.DB_Connect.getConnection();
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_GetAccountDetails(?,?,?,?)}");
             myStmt.setString(1,macAddress);
             myStmt.setString(2,PC_Username);

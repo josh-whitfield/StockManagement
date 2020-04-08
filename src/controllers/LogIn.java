@@ -28,7 +28,7 @@ public class LogIn {
             try {
                 if (database.LogIn.checkLogIn(username, references.Hashing.hashValue(password,database.Global.getSalt(username,"Password")))) {
                     if (chkStayLoggedIn.isSelected())
-                        database.LogIn.saveLogIn(username, password, PC_Credentials.macAddress(), PC_Credentials.PC_Username());
+                        database.LogIn.saveLogIn(username, password, PC_Credentials.getMacAddress(), PC_Credentials.getPcUsername());
                     //TODO - Open new window
                     try {
                         Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));

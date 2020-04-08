@@ -12,17 +12,17 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root;
-        String macAddress = PC_Credentials.macAddress();
-        String PC_Username = PC_Credentials.PC_Username();
+        String macAddress = PC_Credentials.getMacAddress();
+        String PC_Username = PC_Credentials.getPcUsername();
 
         if (database.Main.checkAutoLogIn(macAddress, PC_Username)) {
-            database.Main.AccountDetails(macAddress, PC_Username);
+            database.Main.getAccountDetails(macAddress, PC_Username);
             //TODO - Change to Main Page once built
-            root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/resources/view/CreateAccount.fxml"));
             primaryStage.setTitle("Test");
         }
         else {
-            root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/resources/view/CreateAccount.fxml"));
             primaryStage.setTitle("Log In");
         }
         primaryStage.getIcons().add(new Image("/resources/images/iBuyerIcon.png"));

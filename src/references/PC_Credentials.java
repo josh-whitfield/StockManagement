@@ -6,7 +6,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class PC_Credentials {
-    public static String macAddress() {
+    public static String getMacAddress() {
         try {
             byte[] mac = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
             StringBuilder sb = new StringBuilder();
@@ -23,7 +23,7 @@ public class PC_Credentials {
         }
     }
 
-    public static String PC_Username(){
+    public static String getPcUsername(){
         return System.getProperty("user.name");
     }
 }

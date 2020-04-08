@@ -5,7 +5,7 @@ public class UserDetails {
     public static int AccessLevel;
 
     public UserDetails(String username, int accessLevel) {
-        this.Username = username;
-        this.AccessLevel = accessLevel;
+        Username = username;
+        AccessLevel = accessLevel;
     }
 }
