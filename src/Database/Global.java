@@ -7,7 +7,7 @@ import java.sql.Types;
 public class Global {
     public static byte[] getSalt(String username, String saltType){
         try {
-            Connection myConn = database.DB_Connect.connection();
+            Connection myConn = database.DB_Connect.getConnection();
             assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_FindSalt(?,?,?)}");
             myStmt.setString(1,username);

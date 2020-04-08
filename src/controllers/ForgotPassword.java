@@ -46,14 +46,15 @@ public class ForgotPassword {
         String chosenQuestion = (String) cbSecurityQuestion.getSelectionModel().getSelectedItem();
         String answer = txtAnswer.getText();
 
-        String missingInfo = "";
-        if (username == "" || username.isEmpty()) missingInfo += "Please give your username\r\n";
-        if (chosenQuestion == "Please pick one of the following:")
-            missingInfo += "Please choose a security question\r\n";
-        if (answer == "" || answer.isEmpty()) missingInfo += "Please give your answer\r\n";
+        StringBuilder missingInfo = new StringBuilder();
 
-        if (missingInfo != "")
-            JOptionPane.showMessageDialog(null, "There is missing information:\r\n" + missingInfo, "Missing Information", JOptionPane.INFORMATION_MESSAGE);
+        if (username == "" || username.isEmpty()) missingInfo.append("Please give your username\r\n");
+        if (chosenQuestion == "Please pick one of the following:")
+            missingInfo.append("Please choose a security question\r\n");
+        if (answer == "" || answer.isEmpty()) missingInfo.append("Please give your answer\r\n");
+
+        if (missingInfo.toString() != "")
+            JOptionPane.showMessageDialog(null, "There is missing information:\r\n" + missingInfo.toString(), "Missing Information", JOptionPane.INFORMATION_MESSAGE);
         else {
             int selectedIndex = cbSecurityQuestion.getSelectionModel().getSelectedIndex() - 1;
             boolean correctAnswer = database.ForgotPassword.checkSecurityQuestion(selectedIndex, username, Hashing.hashValue(answer, Global.getSalt(username, String.format("Question%s", selectedIndex))));
