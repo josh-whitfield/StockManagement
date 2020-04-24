@@ -48,12 +48,12 @@ public class ForgotPassword {
 
         StringBuilder missingInfo = new StringBuilder();
 
-        if (username == "" || username.isEmpty()) missingInfo.append("Please give your username\r\n");
-        if (chosenQuestion == "Please pick one of the following:")
+        if (username.equals("") || username.isEmpty()) missingInfo.append("Please give your username\r\n");
+        if (chosenQuestion.equals("Please pick one of the following:"))
             missingInfo.append("Please choose a security question\r\n");
-        if (answer == "" || answer.isEmpty()) missingInfo.append("Please give your answer\r\n");
+        if (answer.equals("") || answer.isEmpty()) missingInfo.append("Please give your answer\r\n");
 
-        if (missingInfo.toString() != "")
+        if (!missingInfo.toString().equals(""))
             JOptionPane.showMessageDialog(null, "There is missing information:\r\n" + missingInfo.toString(), "Missing Information", JOptionPane.INFORMATION_MESSAGE);
         else {
             int selectedIndex = cbSecurityQuestion.getSelectionModel().getSelectedIndex() - 1;

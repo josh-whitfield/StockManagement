@@ -1,6 +1,5 @@
 package controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,13 +19,13 @@ public class LogIn {
     @FXML TextField txtPassword;
     @FXML CheckBox chkStayLoggedIn;
 
-    public void logIn(ActionEvent actionEvent) {
+    public void logIn() {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        if (username != "" && password != "") {
+        if (!username.equals("") && !password.equals("")) {
             try {
-                if (database.LogIn.checkLogIn(username, references.Hashing.hashValue(password,database.Global.getSalt(username,"Password")))) {
+                if (database.LogIn.checkLogIn(username, references.Hashing.hashValue(password, database.Global.getSalt(username, "Password")))) {
                     if (chkStayLoggedIn.isSelected())
                         database.LogIn.saveLogIn(username, password, PC_Credentials.getMacAddress(), PC_Credentials.getPcUsername());
                     //TODO - Open new window
@@ -54,8 +53,8 @@ public class LogIn {
         }
     }
 
-    public void forgotPassword(ActionEvent actionEvent) {
-        try{
+    public void forgotPassword() {
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
             Stage stage = (Stage) loginGrid.getScene().getWindow();
             stage.setTitle("Forgot Password");
@@ -66,8 +65,8 @@ public class LogIn {
         }
     }
 
-    public void createAccount(ActionEvent actionEvent) {
-        try{
+    public void createAccount() {
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
             Stage stage = (Stage) loginGrid.getScene().getWindow();
             stage.setTitle("My New Stage Title");

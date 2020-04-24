@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/database/CreateAccount.java" dialect="ClickHouse" />
+    <file url="file://$PROJECT_DIR$/src/database/ForgotPassword.java" dialect="ClickHouse" />
+    <file url="file://$PROJECT_DIR$/src/database/Global.java" dialect="ClickHouse" />
     <file url="file://$PROJECT_DIR$/src/database/LogIn.java" dialect="ClickHouse" />
+    <file url="file://$PROJECT_DIR$/src/database/Main.java" dialect="ClickHouse" />
   </component>
 </project>
