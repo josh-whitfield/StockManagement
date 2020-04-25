@@ -24,22 +24,20 @@ public class LogIn {
         }
     }
 
-    public static boolean saveLogIn(String username, String password, String macAddress, String PC_Username){
+    public static void saveLogIn(String username, String password, String macAddress, String PC_Username) {
         try {
             Connection myConn = database.DB_Connect.getConnection();
             assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_SaveLogIn(?,?,?,?)}");
-            myStmt.setString(1,username);
-            myStmt.setString(2,password);
-            myStmt.setString(3,macAddress);
-            myStmt.setString(4,PC_Username);
+            myStmt.setString(1, username);
+            myStmt.setString(2, password);
+            myStmt.setString(3, macAddress);
+            myStmt.setString(4, PC_Username);
 
             myStmt.execute();
             myConn.close();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 }

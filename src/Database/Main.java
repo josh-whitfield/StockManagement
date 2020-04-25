@@ -10,6 +10,7 @@ public class Main {
     public static boolean checkAutoLogIn(String macAddress, String PC_Username){
         try {
             Connection myConn = database.DB_Connect.getConnection();
+            assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_CheckAutoLogIn(?,?,?)}");
             myStmt.setString(1,macAddress);
             myStmt.setString(2,PC_Username);
@@ -28,6 +29,7 @@ public class Main {
     public static void getAccountDetails(String macAddress, String PC_Username){
         try {
             Connection myConn = database.DB_Connect.getConnection();
+            assert myConn != null;
             CallableStatement myStmt = myConn.prepareCall("{CALL usp_GetAccountDetails(?,?,?,?)}");
             myStmt.setString(1,macAddress);
             myStmt.setString(2,PC_Username);

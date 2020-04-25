@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class DB_Connect {
     public static Connection getConnection() {
-        String myUrl = "jdbc:mysql://localhost:3306/stock_management";
+        String myUrl = "jdbc:mysql://localhost:3306/stock_management?serverTimezone=GMT";
         try {
             return DriverManager.getConnection(myUrl, "root", "Password99");
         } catch (Exception e) {
