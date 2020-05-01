@@ -17,12 +17,11 @@ public class Main extends Application {
 
         if (database.Main.checkAutoLogIn(macAddress, PC_Username)) {
             database.Main.getAccountDetails(macAddress, PC_Username);
-            //TODO - Change to Main Page once built
-            root = FXMLLoader.load(getClass().getResource("/resources/view/CreateAccount.fxml"));
-            primaryStage.setTitle("Test");
+            root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
+            primaryStage.setTitle("Main Page");
         }
         else {
-            root = FXMLLoader.load(getClass().getResource("/resources/view/CreateAccount.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
             primaryStage.setTitle("Log In");
         }
         primaryStage.getIcons().add(new Image("/resources/images/iBuyerIcon.png"));

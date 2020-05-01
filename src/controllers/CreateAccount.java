@@ -2,11 +2,18 @@ package controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import references.Hashing;
+
+import java.io.IOException;
 
 public class CreateAccount {
     @FXML
@@ -63,36 +70,48 @@ public class CreateAccount {
     }
 
     public void createAccount() {
-        if (!validateData()) {
-            String username = txtUsername.getText();
-            String password = txtPassword.getText();
-            String accessLevel = cbAccessLevel.getValue();
-            String answer1 = txtAnswer1.getText();
-            String answer2 = txtAnswer2.getText();
-            String answer3 = txtAnswer3.getText();
+        try {
+            if (!validateData()) {
+                String username = txtUsername.getText();
+                String password = txtPassword.getText();
+                String accessLevel = cbAccessLevel.getValue();
+                String answer1 = txtAnswer1.getText();
+                String answer2 = txtAnswer2.getText();
+                String answer3 = txtAnswer3.getText();
 
-            byte[] passwordSalt = Hashing.createSalt();
-            byte[] answerOneSalt = Hashing.createSalt();
-            byte[] answerTwoSalt = Hashing.createSalt();
-            byte[] answerThreeSalt = Hashing.createSalt();
+                byte[] passwordSalt = Hashing.createSalt();
+                byte[] answerOneSalt = Hashing.createSalt();
+                byte[] answerTwoSalt = Hashing.createSalt();
+                byte[] answerThreeSalt = Hashing.createSalt();
 
-            database.CreateAccount.saveUserDetails(
-                    username,
-                    Hashing.hashValue(password, passwordSalt),
-                    accessLevel.equals("Admin") ? 1 : 0);
+                database.CreateAccount.saveUserDetails(
+                        username,
+                        Hashing.hashValue(password, passwordSalt),
+                        accessLevel.equals("Admin") ? 1 : 0);
 
-            database.CreateAccount.saveSecurityQuestions(
-                    username,
-                    Hashing.hashValue(answer1, answerOneSalt),
-                    Hashing.hashValue(answer2, answerTwoSalt),
-                    Hashing.hashValue(answer3, answerThreeSalt));
+                database.CreateAccount.saveSecurityQuestions(
+                        username,
+                        Hashing.hashValue(answer1, answerOneSalt),
+                        Hashing.hashValue(answer2, answerTwoSalt),
+                        Hashing.hashValue(answer3, answerThreeSalt));
 
-            database.CreateAccount.saveSalt(
-                    username,
-                    passwordSalt,
-                    answerOneSalt,
-                    answerTwoSalt,
-                    answerThreeSalt);
+                database.CreateAccount.saveSalt(
+                        username,
+                        passwordSalt,
+                        answerOneSalt,
+                        answerTwoSalt,
+                        answerThreeSalt);
+
+                Parent root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
+                Stage primaryStage.setTitle("Main Page");
+                primaryStage.getIcons().add(new Image("/resources/images/iBuyerIcon.png"));
+                primaryStage.setScene(new Scene(root));
+                primaryStage.setResizable(false);
+                root.requestFocus();
+                primaryStage.show();
+            } catch(IOException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -134,8 +153,7 @@ public class CreateAccount {
             lblPasswordMismatch.setVisible(true);
             clearPasswordFields();
             errorsFound = true;
-        } else if (password.length() < 8 || password.length() > 64 ||
-                (!password.matches("[^a-zA-Z0-9 ]") && !password.matches("[a-zA-Z0-9]"))) {
+        } else if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,64}$")) {
             lblPasswordsMissing.setVisible(false);
             lblPasswordMismatch.setVisible(false);
             lblInvalidPassword.setVisible(true);

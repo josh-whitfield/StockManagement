@@ -30,9 +30,9 @@ public class LogIn {
                         database.LogIn.saveLogIn(username, password, PC_Credentials.getMacAddress(), PC_Credentials.getPcUsername());
                     //TODO - Open new window
                     try {
-                        Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
                         Stage stage = (Stage) loginGrid.getScene().getWindow();
-                        stage.setTitle("Forgot Password");
+                        stage.setTitle("Main Page");
                         stage.setScene(new Scene(root));
                         stage.show();
                     } catch (IOException e) {
@@ -67,9 +67,9 @@ public class LogIn {
 
     public void createAccount() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/resources/view/CreateAccount.fxml"));
             Stage stage = (Stage) loginGrid.getScene().getWindow();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Create Account");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
