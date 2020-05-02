@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPageGrid" alignment="center" hgap="10" prefHeight="302.0"
-          prefWidth="583.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPageGrid" alignment="center" hgap="10" prefHeight="330.0"
+          prefWidth="604.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
           fx:controller="controllers.MainPage">
-    <Pane prefHeight="302.0" prefWidth="384.0">
-        <ImageView fitHeight="30.0" fitWidth="116.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true"
+    <Pane prefHeight="348.0" prefWidth="604.0">
+        <ImageView fitHeight="46.0" fitWidth="109.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true"
                    preserveRatio="true">
             <Image url="@../images/iBuyerLogo.png"/>
         </ImageView>
+        <Hyperlink layoutX="525.0" layoutY="7.0" text="Log Out">
+            <font>
+                <Font size="10.0"/>
+            </font>
+        </Hyperlink>
+        <TextField layoutX="398.0" layoutY="31.0" promptText="Search"/>
+        <ImageView fx:id="btnSearch" fitHeight="21.0" fitWidth="20.0" layoutX="547.0" layoutY="33.0"
+                   onMouseClicked="#searchStock" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../images/search.png"/>
+        </ImageView>
+        <Line endX="513.5" layoutX="97.0" layoutY="63.0" startX="-100.0"/>
+        <TableView layoutX="123.0" layoutY="69.0" prefHeight="255.0" prefWidth="470.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="C1"/>
+                <TableColumn prefWidth="75.0" text="C2"/>
+            </columns>
+        </TableView>
+        <ListView layoutX="6.0" layoutY="69.0" prefHeight="255.0" prefWidth="109.0"/>
     </Pane>
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"

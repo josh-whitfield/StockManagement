@@ -69,7 +69,7 @@
                    promptText="Answer"/>
         <TextField fx:id="txtAnswer3" layoutX="239.0" layoutY="387.0" prefHeight="25.0" prefWidth="140.0"
                    promptText="Answer"/>
-        <Label layoutX="59.0" layoutY="384.0" text="In what city were you born?"/>
+        <Label layoutX="59.0" layoutY="391.0" text="In what city were you born?"/>
         <Label fx:id="lblUsernameTaken" layoutX="148.0" layoutY="135.0" text="Username is already taken" textFill="RED">
             <font>
                 <Font size="10.0"/>

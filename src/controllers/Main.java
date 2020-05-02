@@ -18,7 +18,7 @@ public class Main extends Application {
         if (database.Main.checkAutoLogIn(macAddress, PC_Username)) {
             database.Main.getAccountDetails(macAddress, PC_Username);
             root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
-            primaryStage.setTitle("Main Page");
+            primaryStage.setTitle("Stock Management");
         }
         else {
             root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));

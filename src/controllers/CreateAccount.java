@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import references.Hashing;
@@ -103,15 +102,13 @@ public class CreateAccount {
                         answerThreeSalt);
 
                 Parent root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
-                Stage primaryStage.setTitle("Main Page");
-                primaryStage.getIcons().add(new Image("/resources/images/iBuyerIcon.png"));
-                primaryStage.setScene(new Scene(root));
-                primaryStage.setResizable(false);
-                root.requestFocus();
-                primaryStage.show();
-            } catch(IOException e){
-                e.printStackTrace();
+                Stage stage = (Stage) createAccountGrid.getScene().getWindow();
+                stage.setTitle("Stock Management");
+                stage.setScene(new Scene(root));
+                stage.show();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
