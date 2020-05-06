@@ -198,4 +198,16 @@ public class CreateAccount {
         txtConfirmPassword.setText("");
         txtPassword.requestFocus();
     }
+
+    public void logIn() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
+            Stage stage = (Stage) createAccountGrid.getScene().getWindow();
+            stage.setTitle("Log In");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

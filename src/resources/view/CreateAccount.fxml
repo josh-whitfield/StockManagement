@@ -30,8 +30,8 @@
         </Label>
         <Button fx:id="btnSubmit" layoutX="285.0" layoutY="441.0" mnemonicParsing="false" onAction="#createAccount"
                 prefHeight="25.0" prefWidth="95.0" text="Submit"/>
-        <Button fx:id="btnBack" layoutX="33.0" layoutY="441.0" mnemonicParsing="false" prefHeight="25.0"
-                prefWidth="95.0" text="Back"/>
+        <Button fx:id="btnBack" layoutX="33.0" layoutY="441.0" mnemonicParsing="false" onAction="#logIn"
+                prefHeight="25.0" prefWidth="95.0" text="Back"/>
         <TextField fx:id="txtUsername" layoutX="33.0" layoutY="109.0" prefHeight="25.0" prefWidth="345.0"
                    promptText="Username"/>
         <PasswordField fx:id="txtPassword" accessibleRole="PASSWORD_FIELD" layoutX="33.0" layoutY="191.0"

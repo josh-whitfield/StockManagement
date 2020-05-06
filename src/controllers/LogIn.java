@@ -23,6 +23,10 @@ public class LogIn {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
+        //TODO - Remove below
+        username = "testAdmin";
+        password = "Whitf9919!";
+
         if (!username.equals("") && !password.equals("")) {
             try {
                 if (database.LogIn.checkLogIn(username, references.Hashing.hashValue(password, database.Global.getSalt(username, "Password")))) {
@@ -31,7 +35,7 @@ public class LogIn {
                     try {
                         Parent root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
                         Stage stage = (Stage) loginGrid.getScene().getWindow();
-                        stage.setTitle("Main Page");
+                        stage.setTitle("Stock Management");
                         stage.setScene(new Scene(root));
                         stage.show();
                     } catch (IOException e) {
