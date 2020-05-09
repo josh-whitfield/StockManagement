@@ -39,3 +39,4 @@ public class StockData {
         return TotalValue.get();
     }
 }
+
