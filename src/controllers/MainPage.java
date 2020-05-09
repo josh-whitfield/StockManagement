@@ -1,20 +1,16 @@
 package controllers;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import references.StockData;
+import javafx.util.Callback;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -23,8 +19,6 @@ public class MainPage {
     ListView lvContents;
     @FXML
     TableView tvStockTable;
-
-    private ObservableList<StockData> data;
 
     @FXML
     public void initialize() {
@@ -36,29 +30,6 @@ public class MainPage {
         lvContents.setItems(elements);
         lvContents.getSelectionModel().select(0);
 
-        TableColumn PKID = new TableColumn("PKID");
-        TableColumn Image = new TableColumn("Image");
-        TableColumn Name = new TableColumn("Name");
-        TableColumn Quantity = new TableColumn("Quantity");
-        TableColumn Price = new TableColumn("Price");
-        TableColumn TotalValue = new TableColumn("TotalValue");
-        tvStockTable.getColumns().addAll(PKID, Image, Name, Quantity, Price, TotalValue);
-
-        PKID.setCellValueFactory(
-                new PropertyValueFactory<StockData, Integer>("PKID"));
-        Image.setCellValueFactory(
-                new PropertyValueFactory<StockData, ImageView>("Image"));
-        Name.setCellValueFactory(
-                new PropertyValueFactory<StockData, String>("Name"));
-        Quantity.setCellValueFactory(
-                new PropertyValueFactory<StockData, Integer>("Quantity"));
-        Price.setCellValueFactory(
-                new PropertyValueFactory<StockData, Double>("Price"));
-        TotalValue.setCellValueFactory(
-                new PropertyValueFactory<StockData, Double>("TotalValue"));
-
-        PKID.setVisible(false);
-
         updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
     }
 
@@ -68,30 +39,85 @@ public class MainPage {
     }
 
     public void updateTableView(String category) {
-        tvStockTable.getItems().clear();
-        data = FXCollections.observableArrayList();
+        /*tvStockTable.getItems().clear();
+        Method classMethods[] = null;
+        switch (category) {
+            case "cases":
+                classMethods = Cases.class.getMethods();
+                break;
+            case "fans-cooling":
+                classMethods = fans_cooling.class.getMethods();
+                break;
+            case "graphicsCards":
+                classMethods = graphicsCards.class.getMethods();
+                break;
+            case "memory":
+                classMethods = memory.class.getMethods();
+                break;
+            case "storage":
+                classMethods = storage.class.getMethods();
+                break;
+            case "PSUs":
+                classMethods = PSUs.class.getMethods();
+                break;
+            case "monitors":
+                classMethods = monitors.class.getMethods();
+                break;
+            case "keyboards":
+                classMethods = keyboards.class.getMethods();
+                break;
+            case "mice":
+                classMethods = mice.class.getMethods();
+                break;
+        }
+
+        for (Method method : classMethods) {
+            String name = method.getName();
+            if (name.startsWith("get")) {
+                String propName = name.replace("get", "");
+                TableColumn column = new TableColumn(propName);
+                column.setCellValueFactory(new PropertyValueFactory<>(propName));
+                tvStockTable.getColumns().add(column);
+
+                String[] hideCols = {"PKID", "Class", "Category"};
+                if (Arrays.stream(hideCols).anyMatch(propName::equals)) {
+                    column.setVisible(false);
+                }
+            }
+        }
+*/
 
         try {
-            ResultSet rs = database.MainPage.getTableData(category);
-            while (rs.next()) {
-                StockData cm = new StockData();
-                cm.PKID.set(rs.getInt("PKID"));
-                BufferedImage originalImage = ImageIO.read(getClass().getResource(String.format("/resources/images/%s/%s", rs.getString("Category"), rs.getString("ImageLink"))));
-                Image img = SwingFXUtils.toFXImage(originalImage, null);
-                ImageView mv = new ImageView();
-                mv.setImage(img);
-                mv.setFitWidth(70);
-                mv.setFitHeight(80);
-                cm.PKID.set(rs.getInt("PKID"));
-                cm.Image.set(mv);
-                cm.Name.set(rs.getString("Name"));
-                cm.Quantity.set(rs.getInt("Quantity"));
-                cm.Price.set(rs.getDouble("Price"));
-                cm.TotalValue.set(rs.getDouble("TotalValue"));
-                data.add(cm);
-            }
-            tvStockTable.setItems(data);
+            ResultSet resultSet = database.MainPage.getTableData(category);
+            ObservableList<ObservableList> data = FXCollections.observableArrayList();
 
+            for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
+                final int j = i;
+                TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> {
+                    if (param.getValue().get(j) != null) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    } else {
+                        return null;
+                    }
+                });
+
+                tvStockTable.getColumns().addAll(col);
+                //resultSet.columnNames.add(col.getText());
+            }
+
+            while (resultSet.next()) {
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(resultSet.getString(i));
+                }
+                data.add(row);
+            }
+
+            //FINALLY ADDED TO TableView
+            tvStockTable.setItems(data);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");

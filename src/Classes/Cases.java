@@ -1,4 +1,4 @@
-package references;
+package Classes;
 
 import javafx.beans.property.SimpleStringProperty;
 
@@ -9,3 +9,4 @@ public class Cases extends StockData {
         return Dimensions.get();
     }
 }
+
