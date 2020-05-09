@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPageGrid" alignment="center" hgap="10" prefHeight="330.0"
-          prefWidth="599.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPageGrid" alignment="center" hgap="10" prefHeight="349.0"
+          prefWidth="645.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
           fx:controller="controllers.MainPage">
-    <Pane prefHeight="330.0" prefWidth="571.0">
+    <Pane prefHeight="343.0" prefWidth="645.0">
         <ImageView fitHeight="46.0" fitWidth="109.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true"
                    preserveRatio="true">
             <Image url="@../images/iBuyerLogo.png"/>
@@ -22,23 +22,23 @@
                 <Font size="10.0"/>
             </font>
         </Hyperlink>
-        <TextField layoutX="420.0" layoutY="32.0" promptText="Search"/>
-        <ImageView fx:id="btnSearch" fitHeight="21.0" fitWidth="20.0" layoutX="569.0" layoutY="34.0"
+        <TextField layoutX="442.0" layoutY="24.0" promptText="Search"/>
+        <ImageView fx:id="btnSearch" fitHeight="21.0" fitWidth="20.0" layoutX="591.0" layoutY="26.0"
                    onMouseClicked="#searchStock" pickOnBounds="true" preserveRatio="true">
             <Image url="@../images/search.png"/>
         </ImageView>
-        <Line endX="513.5" layoutX="97.0" layoutY="63.0" startX="-100.0"/>
-        <TableView layoutX="123.0" layoutY="69.0" prefHeight="255.0" prefWidth="470.0">
-            <columns>
-                <TableColumn fx:id="PKID" prefWidth="75.0" text="PKID"/>
-                <TableColumn fx:id="Category" prefWidth="75.0" text="Category"/>
-                <TableColumn fx:id="ImageLink" prefWidth="75.0" text="Image"/>
-                <TableColumn fx:id="Name" prefWidth="75.0" text="Name"/>
-                <TableColumn fx:id="Quantity" prefWidth="75.0" text="Quantity"/>
-                <TableColumn fx:id="Price" prefWidth="75.0" text="Price"/>
-            </columns>
+        <Line endX="526.0" endY="7.62939453125E-6" layoutX="97.0" layoutY="63.0" startX="-100.0"/>
+        <TableView fx:id="tvStockTable" layoutX="123.0" layoutY="69.0" prefHeight="236.0" prefWidth="515.0">
         </TableView>
-        <ListView fx:id="lvContents" layoutX="6.0" layoutY="69.0" prefHeight="255.0" prefWidth="109.0"/>
+        <ListView fx:id="lvContents" onMouseClicked="#handleMouseClick" layoutX="6.0" layoutY="69.0" prefHeight="236.0"
+                  prefWidth="109.0"/>
+        <Label layoutX="198.0" layoutY="19.0" text="Stock Management">
+            <font>
+                <Font size="22.0"/>
+            </font>
+        </Label>
+        <Button layoutX="390.0" layoutY="313.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0"
+                text="Button"/>
     </Pane>
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"
