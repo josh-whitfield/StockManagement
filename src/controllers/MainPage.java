@@ -11,7 +11,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainPage {
@@ -39,71 +45,29 @@ public class MainPage {
     }
 
     public void updateTableView(String category) {
-        /*tvStockTable.getItems().clear();
-        Method classMethods[] = null;
-        switch (category) {
-            case "cases":
-                classMethods = Cases.class.getMethods();
-                break;
-            case "fans-cooling":
-                classMethods = fans_cooling.class.getMethods();
-                break;
-            case "graphicsCards":
-                classMethods = graphicsCards.class.getMethods();
-                break;
-            case "memory":
-                classMethods = memory.class.getMethods();
-                break;
-            case "storage":
-                classMethods = storage.class.getMethods();
-                break;
-            case "PSUs":
-                classMethods = PSUs.class.getMethods();
-                break;
-            case "monitors":
-                classMethods = monitors.class.getMethods();
-                break;
-            case "keyboards":
-                classMethods = keyboards.class.getMethods();
-                break;
-            case "mice":
-                classMethods = mice.class.getMethods();
-                break;
-        }
-
-        for (Method method : classMethods) {
-            String name = method.getName();
-            if (name.startsWith("get")) {
-                String propName = name.replace("get", "");
-                TableColumn column = new TableColumn(propName);
-                column.setCellValueFactory(new PropertyValueFactory<>(propName));
-                tvStockTable.getColumns().add(column);
-
-                String[] hideCols = {"PKID", "Class", "Category"};
-                if (Arrays.stream(hideCols).anyMatch(propName::equals)) {
-                    column.setVisible(false);
-                }
-            }
-        }
-*/
-
         try {
+            tvStockTable.getColumns().clear();
+            tvStockTable.getItems().clear();
+
             ResultSet resultSet = database.MainPage.getTableData(category);
             ObservableList<ObservableList> data = FXCollections.observableArrayList();
 
+            String[] excludedCols = {"PKID", "Category", "ImageLink"};
+
             for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
                 final int j = i;
-                TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
-                col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> {
-                    if (param.getValue().get(j) != null) {
-                        return new SimpleStringProperty(param.getValue().get(j).toString());
-                    } else {
-                        return null;
-                    }
-                });
+                if (!Arrays.asList(excludedCols).contains(resultSet.getMetaData().getColumnName(i + 1))) {
+                    TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
+                    col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> {
+                        if (param.getValue().get(j) != null) {
+                            return new SimpleStringProperty(param.getValue().get(j).toString());
+                        } else {
+                            return null;
+                        }
+                    });
 
-                tvStockTable.getColumns().addAll(col);
-                //resultSet.columnNames.add(col.getText());
+                    tvStockTable.getColumns().addAll(col);
+                }
             }
 
             while (resultSet.next()) {
@@ -118,9 +82,37 @@ public class MainPage {
 
             //FINALLY ADDED TO TableView
             tvStockTable.setItems(data);
+
+
+            /*BufferedImage originalImage = ImageIO.read(getClass().getResource(String.format("/resources/images/%s/%s", rs.getString("Category"), rs.getString("ImageLink"))));
+            Image img = SwingFXUtils.toFXImage(originalImage, null);
+            ImageView mv = new ImageView();
+            mv.setImage(img);
+            mv.setFitWidth(70);
+            mv.setFitHeight(80);
+            cm.Image.set(mv);*/
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
+        }
+    }
+
+    @FXML
+    public void viewImage(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() == 2) { //Checking double click
+            try {
+                Object selectedItems = tvStockTable.getSelectionModel().getSelectedItems().get(0);
+                String category = selectedItems.toString().split(",")[1].substring(1);
+                String imageLink = selectedItems.toString().split(",")[2].substring(1);
+
+                BufferedImage image = ImageIO.read(getClass().getResource(String.format("/resources/images/%s/%s", category, imageLink)));
+                Image newImage = image.getScaledInstance(500, 500, Image.SCALE_DEFAULT);
+
+                JLabel picLabel = new JLabel(new ImageIcon(newImage));
+                JOptionPane.showMessageDialog(null, picLabel, "Product Image", JOptionPane.PLAIN_MESSAGE, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

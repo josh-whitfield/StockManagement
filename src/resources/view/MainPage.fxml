@@ -9,36 +9,38 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPageGrid" alignment="center" hgap="10" prefHeight="349.0"
-          prefWidth="645.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPageGrid" alignment="center" hgap="10" prefHeight="365.0"
+          prefWidth="675.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal"
           fx:controller="controllers.MainPage">
-    <Pane prefHeight="343.0" prefWidth="645.0">
+    <Pane prefHeight="388.0" prefWidth="645.0">
         <ImageView fitHeight="46.0" fitWidth="109.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true"
                    preserveRatio="true">
             <Image url="@../images/iBuyerLogo.png"/>
         </ImageView>
-        <Hyperlink layoutX="547.0" layoutY="4.0" text="Log Out">
+        <Hyperlink layoutX="592.0" layoutY="4.0" text="Log Out">
             <font>
                 <Font size="10.0"/>
             </font>
         </Hyperlink>
-        <TextField layoutX="442.0" layoutY="24.0" promptText="Search"/>
-        <ImageView fx:id="btnSearch" fitHeight="21.0" fitWidth="20.0" layoutX="591.0" layoutY="26.0"
+        <TextField layoutX="461.0" layoutY="25.0" promptText="Search"/>
+        <ImageView fx:id="btnSearch" fitHeight="21.0" fitWidth="20.0" layoutX="614.0" layoutY="27.0"
                    onMouseClicked="#searchStock" pickOnBounds="true" preserveRatio="true">
             <Image url="@../images/search.png"/>
         </ImageView>
         <Line endX="526.0" endY="7.62939453125E-6" layoutX="97.0" layoutY="63.0" startX="-100.0"/>
-        <TableView fx:id="tvStockTable" layoutX="123.0" layoutY="69.0" prefHeight="236.0" prefWidth="515.0">
+        <TableView fx:id="tvStockTable" layoutX="123.0" layoutY="83.0" onMouseClicked="#viewImage" prefHeight="236.0"
+                   prefWidth="545.0">
         </TableView>
-        <ListView fx:id="lvContents" onMouseClicked="#handleMouseClick" layoutX="6.0" layoutY="69.0" prefHeight="236.0"
+        <ListView fx:id="lvContents" layoutX="7.0" layoutY="83.0" onMouseClicked="#handleMouseClick" prefHeight="236.0"
                   prefWidth="109.0"/>
-        <Label layoutX="198.0" layoutY="19.0" text="Stock Management">
+        <Label layoutX="228.0" layoutY="17.0" text="Stock Management">
             <font>
                 <Font size="22.0"/>
             </font>
         </Label>
-        <Button layoutX="390.0" layoutY="313.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0"
+        <Button layoutX="579.0" layoutY="326.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0"
                 text="Button"/>
+        <Label layoutX="219.0" layoutY="65.0" text="Double click an entry to view it's image"/>
     </Pane>
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"
