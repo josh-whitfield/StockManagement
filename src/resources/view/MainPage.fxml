@@ -17,30 +17,31 @@
                    preserveRatio="true">
             <Image url="@../images/iBuyerLogo.png"/>
         </ImageView>
-        <Hyperlink layoutX="592.0" layoutY="4.0" text="Log Out">
+        <Hyperlink layoutX="619.0" layoutY="4.0" text="Log Out">
             <font>
                 <Font size="10.0"/>
             </font>
         </Hyperlink>
-        <TextField layoutX="461.0" layoutY="25.0" promptText="Search"/>
-        <ImageView fx:id="btnSearch" fitHeight="21.0" fitWidth="20.0" layoutX="614.0" layoutY="27.0"
+        <TextField fx:id="txtSearch" layoutX="492.0" layoutY="26.0" promptText="Search"/>
+        <ImageView fx:id="btnSearch" fitHeight="21.0" fitWidth="20.0" layoutX="641.0" layoutY="28.0"
                    onMouseClicked="#searchStock" pickOnBounds="true" preserveRatio="true">
             <Image url="@../images/search.png"/>
         </ImageView>
-        <Line endX="526.0" endY="7.62939453125E-6" layoutX="97.0" layoutY="63.0" startX="-100.0"/>
+        <Line endX="578.0" layoutX="97.0" layoutY="63.0" startX="-100.0"/>
         <TableView fx:id="tvStockTable" layoutX="123.0" layoutY="83.0" onMouseClicked="#viewImage" prefHeight="236.0"
                    prefWidth="545.0">
         </TableView>
-        <ListView fx:id="lvContents" layoutX="7.0" layoutY="83.0" onMouseClicked="#handleMouseClick" prefHeight="236.0"
+        <ListView fx:id="lvContents" layoutX="7.0" layoutY="83.0" onMouseClicked="#changeCategory" prefHeight="236.0"
                   prefWidth="109.0"/>
         <Label layoutX="228.0" layoutY="17.0" text="Stock Management">
             <font>
                 <Font size="22.0"/>
             </font>
         </Label>
-        <Button layoutX="579.0" layoutY="326.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0"
-                text="Button"/>
-        <Label layoutX="219.0" layoutY="65.0" text="Double click an entry to view it's image"/>
+        <Button fx:id="btnAmendStock" layoutX="578.0" layoutY="326.0" mnemonicParsing="false" onAction="#amendStock"
+                prefHeight="25.0" prefWidth="90.0" text="Amend Stock"/>
+        <Label layoutX="215.0" layoutY="65.0" text="Double click a product to view it's image"/>
+        <Button layoutX="476.0" layoutY="326.0" mnemonicParsing="false" prefWidth="90.0" text="Export"/>
     </Pane>
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"

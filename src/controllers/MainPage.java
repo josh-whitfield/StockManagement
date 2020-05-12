@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
@@ -25,6 +26,8 @@ public class MainPage {
     ListView lvContents;
     @FXML
     TableView tvStockTable;
+    @FXML
+    TextField txtSearch;
 
     @FXML
     public void initialize() {
@@ -40,7 +43,7 @@ public class MainPage {
     }
 
     @FXML
-    public void handleMouseClick(MouseEvent arg0) {
+    public void changeCategory(MouseEvent arg0) {
         updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
     }
 
@@ -82,15 +85,49 @@ public class MainPage {
 
             //FINALLY ADDED TO TableView
             tvStockTable.setItems(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
+    }
 
+    public void updateTableView(ResultSet resultSet) {
+        try {
+            tvStockTable.getColumns().clear();
+            tvStockTable.getItems().clear();
 
-            /*BufferedImage originalImage = ImageIO.read(getClass().getResource(String.format("/resources/images/%s/%s", rs.getString("Category"), rs.getString("ImageLink"))));
-            Image img = SwingFXUtils.toFXImage(originalImage, null);
-            ImageView mv = new ImageView();
-            mv.setImage(img);
-            mv.setFitWidth(70);
-            mv.setFitHeight(80);
-            cm.Image.set(mv);*/
+            ObservableList<ObservableList> data = FXCollections.observableArrayList();
+
+            String[] excludedCols = {"PKID", "Category", "ImageLink"};
+
+            for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
+                final int j = i;
+                if (!Arrays.asList(excludedCols).contains(resultSet.getMetaData().getColumnName(i + 1))) {
+                    TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
+                    col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> {
+                        if (param.getValue().get(j) != null) {
+                            return new SimpleStringProperty(param.getValue().get(j).toString());
+                        } else {
+                            return null;
+                        }
+                    });
+
+                    tvStockTable.getColumns().addAll(col);
+                }
+            }
+
+            while (resultSet.next()) {
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(resultSet.getString(i));
+                }
+                data.add(row);
+            }
+
+            //FINALLY ADDED TO TableView
+            tvStockTable.setItems(data);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
@@ -116,6 +153,30 @@ public class MainPage {
         }
     }
 
-    public void searchStock(MouseEvent mouseEvent) {
+    public void searchStock() {
+        updateTableView(database.MainPage.getSearchResults(txtSearch.getText()));
+    }
+
+    public void amendStock() {
+        try {
+            Object selectedItems = tvStockTable.getSelectionModel().getSelectedItems().get(0);
+            if (selectedItems != null) {
+                String newAmount;
+                if (selectedItems.toString().split(",").length == 7) {
+                    newAmount = JOptionPane.showInputDialog("Please enter new amount", selectedItems.toString().split(",")[4].substring(1));
+                } else {
+                    newAmount = JOptionPane.showInputDialog("Please enter new amount", selectedItems.toString().split(",")[5].substring(1));
+                }
+                if (newAmount != null) {
+                    database.MainPage.updateStockQuantity(Integer.parseInt(selectedItems.toString().split(",")[0].substring(1)), Integer.parseInt(newAmount));
+                    updateTableView(selectedItems.toString().split(",")[1].substring(1));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a value", "Nothing Selected", JOptionPane.PLAIN_MESSAGE, null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Please enter a whole number", "Invalid Amount", JOptionPane.PLAIN_MESSAGE, null);
+        }
     }
 }
