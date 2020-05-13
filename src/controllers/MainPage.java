@@ -16,12 +16,14 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.*;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainPage {
+public class MainPage extends Component {
     @FXML
     ListView lvContents;
     @FXML
@@ -43,7 +45,7 @@ public class MainPage {
     }
 
     @FXML
-    public void changeCategory(MouseEvent arg0) {
+    public void changeCategory() {
         updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
     }
 
@@ -177,6 +179,59 @@ public class MainPage {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Please enter a whole number", "Invalid Amount", JOptionPane.PLAIN_MESSAGE, null);
+        }
+    }
+
+    public void exportCurrentData() throws IOException {
+        //ResultSet rs = database.MainPage.getTableData(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
+        Writer writer = null;
+        try {
+            JFileChooser fc = new JFileChooser();
+            fc.showSaveDialog(this);
+            String test = fc.getSelectedFile().toString();
+            File file = new File(test + ".csv");
+            writer = new BufferedWriter(new FileWriter(file));
+
+            for (Object row : tvStockTable.getItems()) {
+                writer.write(row.toString().replace("[", "").replace("]", "") + "\n");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            writer.flush();
+            writer.close();
+        }
+    }
+
+    public void exportAllData() throws IOException {
+        ResultSet rs = database.MainPage.getAllData();
+        Writer writer = null;
+        try {
+            JFileChooser fc = new JFileChooser();
+            fc.showSaveDialog(this);
+            String test = fc.getSelectedFile().toString();
+            File file = new File(test + ".csv");
+            writer = new BufferedWriter(new FileWriter(file));
+
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columns = metaData.getColumnCount();
+
+            while (rs.next()) {
+                ArrayList<String> records = new ArrayList<>();
+                for (int i = 1; i <= columns; i++) {
+                    String value = rs.getString(i);
+                    records.add(value);
+                }
+
+                String record = null;
+                for (String s : records) record += s + ",";
+                writer.append(record.replace("null", "") + "\n");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            writer.flush();
+            writer.close();
         }
     }
 }

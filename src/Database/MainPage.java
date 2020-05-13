@@ -43,4 +43,43 @@ public class MainPage {
             return null;
         }
     }
+
+    public static ResultSet getAllData() {
+        try {
+            Connection myConn = database.DB_Connect.getConnection();
+            ResultSet tableData = myConn.createStatement().executeQuery("CALL usp_GetAllStock;");
+
+            return tableData;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void updateStockQuantity(int PKID, int newQuantity) {
+        try {
+            Connection myConn = database.DB_Connect.getConnection();
+            assert myConn != null;
+            CallableStatement myStmt = myConn.prepareCall("{CALL usp_SaveStockUpdate(?,?)}");
+            myStmt.setInt(1, PKID);
+            myStmt.setInt(2, newQuantity);
+
+            myStmt.execute();
+            myConn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ResultSet getSearchResults(String searchTerm) {
+        try {
+            Connection myConn = database.DB_Connect.getConnection();
+            ResultSet tableData = myConn.createStatement().executeQuery(String.format("CALL usp_SearchStock('%s');", searchTerm));
+
+            return tableData;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
