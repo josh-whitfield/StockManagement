@@ -1,5 +1,6 @@
 package controllers;
 
+import classes.Cases;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -41,7 +42,11 @@ public class MainPage extends Component {
         lvContents.setItems(elements);
         lvContents.getSelectionModel().select(0);
 
-        updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
+        //TODO - Preload all data into classes
+        Cases cases = new Cases();
+        tvStockTable.setItems(cases.buildData(tvStockTable));
+
+        //updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
     }
 
     @FXML
@@ -183,7 +188,6 @@ public class MainPage extends Component {
     }
 
     public void exportCurrentData() throws IOException {
-        //ResultSet rs = database.MainPage.getTableData(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
         Writer writer = null;
         try {
             JFileChooser fc = new JFileChooser();
