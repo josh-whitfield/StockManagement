@@ -1,6 +1,5 @@
 package controllers;
 
-import classes.Cases;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,11 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -42,11 +40,7 @@ public class MainPage extends Component {
         lvContents.setItems(elements);
         lvContents.getSelectionModel().select(0);
 
-        //TODO - Preload all data into classes
-        Cases cases = new Cases();
-        tvStockTable.setItems(cases.buildData(tvStockTable));
-
-        //updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
+        updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
     }
 
     @FXML
@@ -59,39 +53,13 @@ public class MainPage extends Component {
             tvStockTable.getColumns().clear();
             tvStockTable.getItems().clear();
 
-            ResultSet resultSet = database.MainPage.getTableData(category);
-            ObservableList<ObservableList> data = FXCollections.observableArrayList();
+            String className = "classes." + category;
+            Class<?> dynamicClass = Class.forName(className); // convert string classname to class
+            Object objClass = dynamicClass.newInstance(); // invoke empty constructor
+            Method setNameMethod = objClass.getClass().getMethod("buildData", TableView.class);
 
-            String[] excludedCols = {"PKID", "Category", "ImageLink"};
-
-            for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
-                final int j = i;
-                if (!Arrays.asList(excludedCols).contains(resultSet.getMetaData().getColumnName(i + 1))) {
-                    TableColumn col = new TableColumn(resultSet.getMetaData().getColumnName(i + 1));
-                    col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> {
-                        if (param.getValue().get(j) != null) {
-                            return new SimpleStringProperty(param.getValue().get(j).toString());
-                        } else {
-                            return null;
-                        }
-                    });
-
-                    tvStockTable.getColumns().addAll(col);
-                }
-            }
-
-            while (resultSet.next()) {
-                //Iterate Row
-                ObservableList<String> row = FXCollections.observableArrayList();
-                for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-                    //Iterate Column
-                    row.add(resultSet.getString(i));
-                }
-                data.add(row);
-            }
-
-            //FINALLY ADDED TO TableView
-            tvStockTable.setItems(data);
+            tvStockTable.setItems((ObservableList) setNameMethod.invoke(objClass, tvStockTable));
+            tvStockTable.getColumns().remove(0);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
@@ -145,7 +113,7 @@ public class MainPage extends Component {
     public void viewImage(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) { //Checking double click
             try {
-                Object selectedItems = tvStockTable.getSelectionModel().getSelectedItems().get(0);
+                /*
                 String category = selectedItems.toString().split(",")[1].substring(1);
                 String imageLink = selectedItems.toString().split(",")[2].substring(1);
 
@@ -154,7 +122,8 @@ public class MainPage extends Component {
 
                 JLabel picLabel = new JLabel(new ImageIcon(newImage));
                 JOptionPane.showMessageDialog(null, picLabel, "Product Image", JOptionPane.PLAIN_MESSAGE, null);
-            } catch (IOException e) {
+            */
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
