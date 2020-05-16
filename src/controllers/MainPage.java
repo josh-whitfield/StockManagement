@@ -8,13 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import references.UserDetails;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,7 +31,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainPage extends Component {
-    public String _username;
     @FXML
     GridPane mainPageGrid;
     @FXML
@@ -39,10 +39,19 @@ public class MainPage extends Component {
     TableView tvStockTable;
     @FXML
     TextField txtSearch;
+    @FXML
+    Label lblWelcome;
+    @FXML
+    Button btnAmendStock;
 
     @FXML
-    public void initialize(String username) {
-        _username = username;
+    public void initialize() {
+        //TODO - Disable amend stock buttons for non-admins
+
+        lblWelcome.setText("Welcome, " + UserDetails.Username);
+        if (UserDetails.AccessLevel == 0) {
+            btnAmendStock.setDisable(true);
+        }
 
         //Insert into memory the Category list
         ObservableList elements = FXCollections.observableArrayList();
@@ -303,7 +312,7 @@ public class MainPage extends Component {
     }
 
     public void logOut() {
-        database.MainPage.removeAutoLogin(_username);
+        database.MainPage.removeAutoLogin(UserDetails.Username);
 
         try {
             //Load Log In page

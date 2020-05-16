@@ -78,7 +78,7 @@ public class ForgotPassword {
                 }
                 if (password.get(0) == "Pass") {
                     //Update password
-                    database.ForgotPassword.updatePassword(username, password.get(1));
+                    database.ForgotPassword.updatePassword(username, Hashing.hashValue(password.get(1), Global.getSalt(username, "Password")));
                 }
                 //Wrong Security Answer
             } else {

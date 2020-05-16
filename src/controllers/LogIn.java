@@ -1,5 +1,6 @@
 package controllers;
 
+import database.Global;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import references.Hashing;
 import references.PC_Credentials;
 
 import javax.swing.*;
@@ -31,11 +33,16 @@ public class LogIn {
         if (!username.equals("") && !password.equals("")) {
             try {
                 //Check if user and pass are valid in DB (hashed and salted)
-                if (database.LogIn.checkLogIn(username, references.Hashing.hashValue(password, database.Global.getSalt(username, "Password")))) {
+                if (database.LogIn.checkLogIn(username, Hashing.hashValue(password, Global.getSalt(username, "Password")))) {
+                    //Get PC user details
+                    String macAddress = PC_Credentials.getMacAddress();
+                    String PC_Username = PC_Credentials.getPcUsername();
                     //Save details for automatic log in if checked
                     if (chkStayLoggedIn.isSelected())
-                        database.LogIn.saveLogIn(username, PC_Credentials.getMacAddress(), PC_Credentials.getPcUsername());
+                        database.LogIn.saveLogIn(username, macAddress, PC_Username);
                     try {
+                        //Save account details in memory
+                        Global.getAccessLevel(username);
                         //Load main Stock Management page
                         Parent root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
                         Stage stage = (Stage) loginGrid.getScene().getWindow();

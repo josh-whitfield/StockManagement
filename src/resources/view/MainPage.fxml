@@ -46,6 +46,7 @@
         <Button fx:id="btnExportAll" layoutX="251.0" layoutY="326.0" mnemonicParsing="false" onAction="#exportAllData"
                 prefHeight="25.0" prefWidth="130.0" text="Export All Data"/>
         <Label layoutX="589.0" layoutY="6.0"/>
+        <Label fx:id="lblWelcome" layoutX="494.0" layoutY="7.0" text="Welcome, "/>
     </Pane>
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"
