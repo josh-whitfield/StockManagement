@@ -60,7 +60,7 @@
             </font>
         </Label>
         <ChoiceBox fx:id="cbAccessLevel" layoutX="239.0" layoutY="267.0" prefHeight="25.0" prefWidth="140.0"/>
-        <Label layoutX="68.0" layoutY="270.0" text="Access Level Required:"/>
+        <Label layoutX="111.0" layoutY="271.0" text="Access Level Required:"/>
         <Label layoutX="33.0" layoutY="310.0" text="What is your mother's maiden name?"/>
         <TextField fx:id="txtAnswer1" layoutX="239.0" layoutY="307.0" prefHeight="25.0" prefWidth="140.0"
                    promptText="Answer"/>
@@ -69,7 +69,7 @@
                    promptText="Answer"/>
         <TextField fx:id="txtAnswer3" layoutX="239.0" layoutY="387.0" prefHeight="25.0" prefWidth="140.0"
                    promptText="Answer"/>
-        <Label layoutX="59.0" layoutY="391.0" text="In what city were you born?"/>
+        <Label layoutX="82.0" layoutY="391.0" text="In what city were you born?"/>
         <Label fx:id="lblUsernameTaken" layoutX="148.0" layoutY="135.0" text="Username is already taken" textFill="RED">
             <font>
                 <Font size="10.0"/>

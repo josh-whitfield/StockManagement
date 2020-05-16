@@ -8,8 +8,10 @@ import java.net.UnknownHostException;
 public class PC_Credentials {
     public static String getMacAddress() {
         try {
+            //Get User mac address
             byte[] mac = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
             StringBuilder sb = new StringBuilder();
+            //Format into readable string
             for (int i = 0; i < mac.length; i++) {
                 sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
             }

@@ -25,6 +25,7 @@ public class Cases extends StockData {
 
     public ObservableList<Cases> buildData(TableView tvStockTable) {
         TableColumn PKID = new TableColumn("PKID");
+        TableColumn Category = new TableColumn("Category");
         TableColumn Name = new TableColumn("Name");
         TableColumn Image = new TableColumn("Image");
         TableColumn Dimensions = new TableColumn("Dimensions");
@@ -34,6 +35,7 @@ public class Cases extends StockData {
         tvStockTable.getColumns().addAll(PKID, Name, Image, Dimensions, Quantity, Price, TotalValue);
 
         PKID.setCellValueFactory(new PropertyValueFactory<Cases, String>("PKID"));
+        Category.setCellValueFactory(new PropertyValueFactory<Cases, String>("Category"));
         Name.setCellValueFactory(new PropertyValueFactory<Cases, String>("Name"));
         Image.setCellValueFactory(new PropertyValueFactory<Cases, ImageView>("Image"));
         Dimensions.setCellValueFactory(new PropertyValueFactory<Cases, String>("Dimensions"));
@@ -47,6 +49,7 @@ public class Cases extends StockData {
             while (resultSet.next()) {
                 Cases cm = new Cases();
                 cm.PKID.set(resultSet.getInt("PKID"));
+                cm.Category.set(resultSet.getString("Category"));
                 cm.Name.set(resultSet.getString("Name"));
 
                 BufferedImage image = ImageIO.read(getClass().getResource(

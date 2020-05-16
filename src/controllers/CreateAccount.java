@@ -35,7 +35,6 @@ public class CreateAccount {
     Label lblMissingQuestionThree;
     @FXML
     Label lblAccessLevelRequired;
-
     @FXML
     GridPane createAccountGrid;
     @FXML
@@ -54,8 +53,10 @@ public class CreateAccount {
     TextField txtAnswer3;
 
     public void initialize() {
+        //Populate Access level drop down
         cbAccessLevel.setItems(FXCollections.observableArrayList("User", "Admin"));
 
+        //Hide all errors by default
         lblUsernameRequired.setVisible(false);
         lblUsernameInvalid.setVisible(false);
         lblUsernameTaken.setVisible(false);
@@ -70,7 +71,9 @@ public class CreateAccount {
 
     public void createAccount() {
         try {
+            //If data is valid...
             if (!validateData()) {
+                //Get all entered Info
                 String username = txtUsername.getText();
                 String password = txtPassword.getText();
                 String accessLevel = cbAccessLevel.getValue();
@@ -78,22 +81,26 @@ public class CreateAccount {
                 String answer2 = txtAnswer2.getText();
                 String answer3 = txtAnswer3.getText();
 
+                //Hash and salt sensitive information
                 byte[] passwordSalt = Hashing.createSalt();
                 byte[] answerOneSalt = Hashing.createSalt();
                 byte[] answerTwoSalt = Hashing.createSalt();
                 byte[] answerThreeSalt = Hashing.createSalt();
 
+                //Save Log in details
                 database.CreateAccount.saveUserDetails(
                         username,
                         Hashing.hashValue(password, passwordSalt),
                         accessLevel.equals("Admin") ? 1 : 0);
 
+                //Save recovery details
                 database.CreateAccount.saveSecurityQuestions(
                         username,
                         Hashing.hashValue(answer1, answerOneSalt),
                         Hashing.hashValue(answer2, answerTwoSalt),
                         Hashing.hashValue(answer3, answerThreeSalt));
 
+                //Save salts
                 database.CreateAccount.saveSalt(
                         username,
                         passwordSalt,
@@ -101,6 +108,7 @@ public class CreateAccount {
                         answerTwoSalt,
                         answerThreeSalt);
 
+                //Open main stock management page
                 Parent root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
                 Stage stage = (Stage) createAccountGrid.getScene().getWindow();
                 stage.setTitle("Stock Management");
@@ -113,6 +121,7 @@ public class CreateAccount {
     }
 
     private boolean validateData() {
+        //Get all entered info
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         String confirmPassword = txtConfirmPassword.getText();
@@ -122,7 +131,7 @@ public class CreateAccount {
         String answer3 = txtAnswer3.getText();
 
         boolean errorsFound = false;
-
+        //Validate Username
         if (username.equals("")) {
             lblUsernameRequired.setVisible(true);
             errorsFound = true;
@@ -141,6 +150,7 @@ public class CreateAccount {
             lblUsernameTaken.setVisible(false);
         }
 
+        //Validate password
         if (password.equals("") || confirmPassword.equals("")) {
             lblPasswordsMissing.setVisible(true);
             clearPasswordFields();
@@ -162,6 +172,7 @@ public class CreateAccount {
             lblInvalidPassword.setVisible(false);
         }
 
+        //Validate access level
         if (accessLevel == null) {
             lblAccessLevelRequired.setVisible(true);
             errorsFound = true;
@@ -169,20 +180,19 @@ public class CreateAccount {
             lblAccessLevelRequired.setVisible(false);
         }
 
+        //Validate Security Question answers
         if (answer1.equals("")) {
             lblMissingQuestionOne.setVisible(true);
             errorsFound = true;
         } else {
             lblMissingQuestionOne.setVisible(false);
         }
-
         if (answer2.equals("")) {
             lblMissingQuestionTwo.setVisible(true);
             errorsFound = true;
         } else {
             lblMissingQuestionTwo.setVisible(false);
         }
-
         if (answer3.equals("")) {
             lblMissingQuestionThree.setVisible(true);
             errorsFound = true;
@@ -194,6 +204,7 @@ public class CreateAccount {
     }
 
     private void clearPasswordFields() {
+        //Clear passwords and set focus
         txtPassword.setText("");
         txtConfirmPassword.setText("");
         txtPassword.requestFocus();
@@ -201,6 +212,7 @@ public class CreateAccount {
 
     public void logIn() {
         try {
+            //Redirect back to log in
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
             Stage stage = (Stage) createAccountGrid.getScene().getWindow();
             stage.setTitle("Log In");

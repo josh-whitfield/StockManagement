@@ -17,7 +17,7 @@
                    preserveRatio="true">
             <Image url="@../images/iBuyerLogo.png"/>
         </ImageView>
-        <Hyperlink layoutX="619.0" layoutY="4.0" text="Log Out">
+        <Hyperlink layoutX="619.0" layoutY="4.0" onAction="#logOut" text="Log Out">
             <font>
                 <Font size="10.0"/>
             </font>
@@ -43,8 +43,9 @@
         <Label layoutX="215.0" layoutY="65.0" text="Double click a product to view it's image"/>
         <Button fx:id="btnExportCurrent" layoutX="396.0" layoutY="326.0" mnemonicParsing="false"
                 onAction="#exportCurrentData" prefHeight="25.0" prefWidth="130.0" text="Export Current Data"/>
-        <Button fx:id="btnExportAll" layoutX="251.0" layoutY="326.0" mnemonicParsing="false" prefHeight="25.0"
-                prefWidth="130.0" onAction="#exportAllData" text="Export All Data"/>
+        <Button fx:id="btnExportAll" layoutX="251.0" layoutY="326.0" mnemonicParsing="false" onAction="#exportAllData"
+                prefHeight="25.0" prefWidth="130.0" text="Export All Data"/>
+        <Label layoutX="589.0" layoutY="6.0"/>
     </Pane>
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"

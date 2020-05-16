@@ -27,12 +27,16 @@ public class LogIn {
         username = "testAdmin";
         password = "Whitf9919!";
 
+        //Check for blanks
         if (!username.equals("") && !password.equals("")) {
             try {
+                //Check if user and pass are valid in DB (hashed and salted)
                 if (database.LogIn.checkLogIn(username, references.Hashing.hashValue(password, database.Global.getSalt(username, "Password")))) {
+                    //Save details for automatic log in if checked
                     if (chkStayLoggedIn.isSelected())
-                        database.LogIn.saveLogIn(username, password, PC_Credentials.getMacAddress(), PC_Credentials.getPcUsername());
+                        database.LogIn.saveLogIn(username, PC_Credentials.getMacAddress(), PC_Credentials.getPcUsername());
                     try {
+                        //Load main Stock Management page
                         Parent root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
                         Stage stage = (Stage) loginGrid.getScene().getWindow();
                         stage.setTitle("Stock Management");
@@ -42,6 +46,7 @@ public class LogIn {
                         e.printStackTrace();
                     }
                 } else {
+                    //Clear and set password field on incorrect details
                     JOptionPane.showMessageDialog(null, "Incorrect username or password", "Invalid Login", JOptionPane.INFORMATION_MESSAGE);
                     txtPassword.setText("");
                     txtUsername.requestFocus();
@@ -50,6 +55,7 @@ public class LogIn {
                 e.printStackTrace();
             }
         } else {
+            //Clear and set password field on missing details
             JOptionPane.showMessageDialog(null, "Please enter a username and password", "Invalid Login", JOptionPane.INFORMATION_MESSAGE);
             txtPassword.setText("");
             txtUsername.requestFocus();
@@ -58,6 +64,7 @@ public class LogIn {
 
     public void forgotPassword() {
         try {
+            //Load Forgot Password page
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
             Stage stage = (Stage) loginGrid.getScene().getWindow();
             stage.setTitle("Forgot Password");
@@ -70,6 +77,7 @@ public class LogIn {
 
     public void createAccount() {
         try {
+            //Load Create Account page
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/CreateAccount.fxml"));
             Stage stage = (Stage) loginGrid.getScene().getWindow();
             stage.setTitle("Create Account");

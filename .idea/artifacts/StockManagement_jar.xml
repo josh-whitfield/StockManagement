@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="StockManagement:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/StockManagement_jar</output-path>
+    <root id="archive" name="StockManagement.jar">
+      <element id="module-output" name="StockManagement" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/mysql/mysql-connector-java/8.0.19/mysql-connector-java-8.0.19.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/.idea/libraries/commons-net-3.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/mysql-connector-java-8.0.19.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/mysql-connector-java-8.0.19/mysql-connector.jar" path-in-jar="/" />
+      <element id="library" level="project" name="commons-net-3.6" />
+      <element id="library" level="project" name="mysql:mysql-connector-java:8.0.19" />
+      <element id="library" level="project" name="mysql-connector-java-8.0.19" />
+    </root>
+  </artifact>
+</component>
