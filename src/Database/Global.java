@@ -1,5 +1,7 @@
 package database;
 
+import references.UserDetails;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
@@ -27,6 +29,25 @@ public class Global {
             e.printStackTrace();
             //Return Null to stop and further procedures
             return null;
+        }
+    }
+
+    public static void getAccessLevel(String username) {
+        try {
+            Connection myConn = database.DB_Connect.getConnection();
+            assert myConn != null;
+            CallableStatement myStmt = myConn.prepareCall("{CALL usp_GetAccessLevel(?,?)}");
+            myStmt.setString(1, username);
+            myStmt.registerOutParameter(2, Types.INTEGER);
+
+            myStmt.execute();
+            int accessLevel = myStmt.getInt(2);
+            myConn.close();
+
+            UserDetails.Username = username;
+            UserDetails.AccessLevel = accessLevel;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

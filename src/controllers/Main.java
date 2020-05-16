@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import references.PC_Credentials;
 
-//TODO - Change Accessibility on all available methods and classes
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{

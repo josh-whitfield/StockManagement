@@ -21,13 +21,9 @@ public class LogIn {
     @FXML TextField txtPassword;
     @FXML CheckBox chkStayLoggedIn;
 
-    public void logIn() {
+    private void logIn() {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-
-        //TODO - Remove below
-        username = "testAdmin";
-        password = "Whitf9919!";
 
         //Check for blanks
         if (!username.equals("") && !password.equals("")) {
@@ -69,7 +65,7 @@ public class LogIn {
         }
     }
 
-    public void forgotPassword() {
+    private void forgotPassword() {
         try {
             //Load Forgot Password page
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/ForgotPassword.fxml"));
@@ -82,7 +78,7 @@ public class LogIn {
         }
     }
 
-    public void createAccount() {
+    private void createAccount() {
         try {
             //Load Create Account page
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/CreateAccount.fxml"));

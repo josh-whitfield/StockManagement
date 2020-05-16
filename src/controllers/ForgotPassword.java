@@ -34,7 +34,7 @@ public class ForgotPassword {
         cbSecurityQuestion.setValue("Please pick one of the following:");
     }
 
-    public void logIn() {
+    private void logIn() {
         try {
             //Redirect back to log in page
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
@@ -47,7 +47,7 @@ public class ForgotPassword {
         }
     }
 
-    public void submit() {
+    private void submit() {
         //Get entered info
         String username = txtUsername.getText();
         String chosenQuestion = (String) cbSecurityQuestion.getSelectionModel().getSelectedItem();
@@ -79,6 +79,8 @@ public class ForgotPassword {
                 if (password.get(0) == "Pass") {
                     //Update password
                     database.ForgotPassword.updatePassword(username, Hashing.hashValue(password.get(1), Global.getSalt(username, "Password")));
+                    JOptionPane.showMessageDialog(null, "Password changed successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    logIn();
                 }
                 //Wrong Security Answer
             } else {
@@ -87,7 +89,7 @@ public class ForgotPassword {
         }
     }
 
-    public List<String> enterNewPassword() {
+    private List<String> enterNewPassword() {
         //Declare properties for new JPanel
         JTextField txtPassword = new JPasswordField(5);
         JTextField txtConfirmPassword = new JPasswordField(5);

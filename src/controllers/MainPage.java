@@ -46,8 +46,7 @@ public class MainPage extends Component {
 
     @FXML
     public void initialize() {
-        //TODO - Disable amend stock buttons for non-admins
-
+        //Disable amend stock buttons for non-admins
         lblWelcome.setText("Welcome, " + UserDetails.Username);
         if (UserDetails.AccessLevel == 0) {
             btnAmendStock.setDisable(true);
@@ -67,14 +66,14 @@ public class MainPage extends Component {
     }
 
     @FXML
-    public void changeCategory() {
+    private void changeCategory() {
         txtSearch.setText("");
         //Update TableView with newly selected Category
         updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
     }
 
     //Update the TableView based on existing Classes
-    public void updateTableView(String category) {
+    private void updateTableView(String category) {
         try {
             //Clear the TableView
             tvStockTable.getColumns().clear();
@@ -94,7 +93,7 @@ public class MainPage extends Component {
     }
 
     //Update TableView based on SQL results
-    public void updateTableView(ResultSet resultSet) {
+    private void updateTableView(ResultSet resultSet) {
         try {
             //Clear the TableView
             tvStockTable.getColumns().clear();
@@ -145,7 +144,7 @@ public class MainPage extends Component {
         }
     }
 
-    public Object getDynamicClass(String classString) {
+    private Object getDynamicClass(String classString) {
         try {
             //Convert string classname to class
             String className = "classes." + classString;
@@ -162,7 +161,7 @@ public class MainPage extends Component {
 
     @FXML
     //Run when a TableView row is double clicked
-    public void viewImage(javafx.scene.input.MouseEvent mouseEvent) {
+    private void viewImage(javafx.scene.input.MouseEvent mouseEvent) {
         //Check it was double clicked
         if (mouseEvent.getClickCount() == 2) {
             try {
@@ -191,12 +190,12 @@ public class MainPage extends Component {
         }
     }
 
-    public void searchStock() {
+    private void searchStock() {
         //Update TableView from SQL results
         updateTableView(database.MainPage.getSearchResults(txtSearch.getText()));
     }
 
-    public void amendStock() {
+    private void amendStock() {
         try {
             //If the user is NOT amending from Search results
             if (Objects.equals(txtSearch.getText(), "") || txtSearch.getText() == null) {
@@ -241,7 +240,7 @@ public class MainPage extends Component {
         }
     }
 
-    public void exportCurrentData() throws IOException {
+    private void exportCurrentData() throws IOException {
         //If the user is NOT amending from Search results
         if (Objects.equals(txtSearch.getText(), "") || txtSearch.getText() == null) {
             //Run SProc with Category
@@ -252,12 +251,12 @@ public class MainPage extends Component {
         }
     }
 
-    public void exportAllData() throws IOException {
+    private void exportAllData() throws IOException {
         //Get all base stock data from SQL
         writeToFile(database.MainPage.getAllData());
     }
 
-    public void writeToFile(ResultSet rs) throws IOException {
+    private void writeToFile(ResultSet rs) throws IOException {
         Writer writer = null;
         try {
             //Get FilePath from user input
@@ -311,7 +310,7 @@ public class MainPage extends Component {
         }
     }
 
-    public void logOut() {
+    private void logOut() {
         database.MainPage.removeAutoLogin(UserDetails.Username);
 
         try {

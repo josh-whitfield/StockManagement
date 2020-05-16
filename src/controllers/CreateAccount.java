@@ -1,5 +1,6 @@
 package controllers;
 
+import database.Global;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -69,7 +70,7 @@ public class CreateAccount {
         lblMissingQuestionThree.setVisible(false);
     }
 
-    public void createAccount() {
+    private void createAccount() {
         try {
             //If data is valid...
             if (!validateData()) {
@@ -107,6 +108,8 @@ public class CreateAccount {
                         answerOneSalt,
                         answerTwoSalt,
                         answerThreeSalt);
+
+                Global.getAccessLevel(username);
 
                 //Open main stock management page
                 Parent root = FXMLLoader.load(getClass().getResource("/resources/view/MainPage.fxml"));
@@ -210,7 +213,7 @@ public class CreateAccount {
         txtPassword.requestFocus();
     }
 
-    public void logIn() {
+    private void logIn() {
         try {
             //Redirect back to log in
             Parent root = FXMLLoader.load(getClass().getResource("/resources/view/LogIn.fxml"));
