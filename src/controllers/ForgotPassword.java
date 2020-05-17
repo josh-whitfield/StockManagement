@@ -34,6 +34,7 @@ public class ForgotPassword {
         cbSecurityQuestion.setValue("Please pick one of the following:");
     }
 
+    @FXML
     private void logIn() {
         try {
             //Redirect back to log in page
@@ -47,6 +48,7 @@ public class ForgotPassword {
         }
     }
 
+    @FXML
     private void submit() {
         //Get entered info
         String username = txtUsername.getText();

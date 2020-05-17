@@ -190,49 +190,52 @@ public class MainPage extends Component {
         }
     }
 
+    @FXML
     private void searchStock() {
         //Update TableView from SQL results
         updateTableView(database.MainPage.getSearchResults(txtSearch.getText()));
     }
 
+    @FXML
     private void amendStock() {
         try {
-            //If the user is NOT amending from Search results
-            if (Objects.equals(txtSearch.getText(), "") || txtSearch.getText() == null) {
-                //Get the ID for the record
-                TableColumn colPKID = (TableColumn) tvStockTable.getColumns().get(0);
-                int pkid = (int) colPKID.getCellObservableValue(
-                        tvStockTable.getSelectionModel().getSelectedIndex()).getValue();
+            //If something is selected in TableView
+            if (tvStockTable.getSelectionModel().getSelectedItem() != null) {
+                //If the user is NOT amending from Search results
+                if (Objects.equals(txtSearch.getText(), "") || txtSearch.getText() == null) {
+                    //Get the ID for the record
+                    TableColumn colPKID = (TableColumn) tvStockTable.getColumns().get(0);
+                    int pkid = (int) colPKID.getCellObservableValue(
+                            tvStockTable.getSelectionModel().getSelectedIndex()).getValue();
 
-                //Get the current quantity
-                TableColumn colQuantity = (TableColumn) tvStockTable.getColumns().get(4);
-                int quantity = (int) colQuantity.getCellObservableValue(
-                        tvStockTable.getSelectionModel().getSelectedIndex()).getValue();
+                    //Get the current quantity
+                    TableColumn colQuantity = (TableColumn) tvStockTable.getColumns().get(4);
+                    int quantity = (int) colQuantity.getCellObservableValue(
+                            tvStockTable.getSelectionModel().getSelectedIndex()).getValue();
 
-                //Retrieve new amount from popup, handled by catch
-                String newAmount = JOptionPane.showInputDialog("Please enter new amount", quantity);
-                if (newAmount != null) {
-                    //Update database, and refresh table
-                    database.MainPage.updateStockQuantity(pkid, Integer.parseInt(newAmount));
-                    updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
-                } else {
-                    JOptionPane.showMessageDialog(null, "Please select a value", "Nothing Selected", JOptionPane.PLAIN_MESSAGE, null);
-                }
-                //If the User IS amending from Search results
-            } else {
-                //Retrieve CSV of items
-                Object selectedItems = tvStockTable.getSelectionModel().getSelectedItems().get(0);
-                if (selectedItems != null) {
                     //Retrieve new amount from popup, handled by catch
-                    String newAmount = JOptionPane.showInputDialog("Please enter new amount", selectedItems.toString().split(",")[4].substring(1));
+                    String newAmount = JOptionPane.showInputDialog("Please enter new amount", quantity);
                     if (newAmount != null) {
                         //Update database, and refresh table
-                        database.MainPage.updateStockQuantity(Integer.parseInt(selectedItems.toString().split(",")[0].substring(1)), Integer.parseInt(newAmount));
-                        updateTableView(database.MainPage.getSearchResults(txtSearch.getText()));
+                        database.MainPage.updateStockQuantity(pkid, Integer.parseInt(newAmount));
+                        updateTableView(String.valueOf(lvContents.getSelectionModel().getSelectedItem()));
                     }
+                    //If the User IS amending from Search results
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please select a value", "Nothing Selected", JOptionPane.PLAIN_MESSAGE, null);
+                    //Retrieve CSV of items
+                    Object selectedItems = tvStockTable.getSelectionModel().getSelectedItems().get(0);
+                    if (selectedItems != null) {
+                        //Retrieve new amount from popup, handled by catch
+                        String newAmount = JOptionPane.showInputDialog("Please enter new amount", selectedItems.toString().split(",")[4].substring(1));
+                        if (newAmount != null) {
+                            //Update database, and refresh table
+                            database.MainPage.updateStockQuantity(Integer.parseInt(selectedItems.toString().split(",")[0].substring(1)), Integer.parseInt(newAmount));
+                            updateTableView(database.MainPage.getSearchResults(txtSearch.getText()));
+                        }
+                    }
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a value", "Nothing Selected", JOptionPane.PLAIN_MESSAGE, null);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -240,6 +243,7 @@ public class MainPage extends Component {
         }
     }
 
+    @FXML
     private void exportCurrentData() throws IOException {
         //If the user is NOT amending from Search results
         if (Objects.equals(txtSearch.getText(), "") || txtSearch.getText() == null) {
@@ -251,6 +255,7 @@ public class MainPage extends Component {
         }
     }
 
+    @FXML
     private void exportAllData() throws IOException {
         //Get all base stock data from SQL
         writeToFile(database.MainPage.getAllData());
@@ -310,6 +315,7 @@ public class MainPage extends Component {
         }
     }
 
+    @FXML
     private void logOut() {
         database.MainPage.removeAutoLogin(UserDetails.Username);
 

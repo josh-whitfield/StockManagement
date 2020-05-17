@@ -21,6 +21,7 @@ public class LogIn {
     @FXML TextField txtPassword;
     @FXML CheckBox chkStayLoggedIn;
 
+    @FXML
     private void logIn() {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
@@ -65,6 +66,7 @@ public class LogIn {
         }
     }
 
+    @FXML
     private void forgotPassword() {
         try {
             //Load Forgot Password page
@@ -78,6 +80,7 @@ public class LogIn {
         }
     }
 
+    @FXML
     private void createAccount() {
         try {
             //Load Create Account page

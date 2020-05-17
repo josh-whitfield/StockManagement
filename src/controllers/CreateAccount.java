@@ -70,6 +70,7 @@ public class CreateAccount {
         lblMissingQuestionThree.setVisible(false);
     }
 
+    @FXML
     private void createAccount() {
         try {
             //If data is valid...
@@ -213,6 +214,7 @@ public class CreateAccount {
         txtPassword.requestFocus();
     }
 
+    @FXML
     private void logIn() {
         try {
             //Redirect back to log in
